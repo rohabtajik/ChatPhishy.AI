@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPhishy.AI</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <header>
+        <h1>ChatPhishy.AI</h1>
+        <p class="intro-text">Your trusted partner in Cyber Security and IT Solutions</p>
+        <img src="project.jpg" alt="IT" class="header-image">
+    </header>
+
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <section id="services" class="services">
+            <div class="services-header">
+                <h2>Our Services</h2>
+            </div>
+            <div class="services-content">
+                <div class="service-item">
+                    <h3>Network Security</h3>
+                    <img src="network security.jpeg" alt="Network Security">
+                    <p>Protect your network from threats and vulnerabilities.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Digital Forensics</h3>
+                    <img src="digital forensics.jpeg" alt="Digital Forensics">
+                    <p>Investigate and analyze digital evidence.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Phishing Detection</h3>
+                    <img src="phishing detection.jpeg" alt="Phishing Detection">
+                    <p>Identify and block phishing attempts with advanced AI.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Cloud Solutions</h3>
+                    <img src="cloud solutions.jpeg" alt="Cloud Solutions">
+                    <p>Secure and optimize your cloud infrastructure.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>At ChatPhishy.AI, we are committed to leading the way in cybersecurity and IT solutions. Based in Melbourne, Australia, our company has earned a reputation as a trusted partner for businesses seeking robust and innovative protection for their digital assets. We understand that in today's fast-paced digital landscape, safeguarding sensitive information and ensuring the seamless operation of IT infrastructure are critical to business success.</p>
+            <p>Our team of seasoned cybersecurity professionals and IT experts bring decades of collective experience to the table. We pride ourselves on staying ahead of emerging threats and leveraging the latest technologies to provide comprehensive solutions tailored to the unique needs of each client. Whether you're a small business or a large enterprise, we have the expertise to help you navigate the complexities of cybersecurity, mitigate risks, and enhance your IT capabilities.</p>
+            <p>We offer a wide range of services, from advanced threat detection and response to IT infrastructure management, cloud security, and compliance consulting. Our state-of-the-art AI-driven tools and methodologies are designed to proactively identify vulnerabilities, prevent cyberattacks, and optimize your IT systems for peak performance.</p>
+            <p>At ChatPhishy.AI, our mission is to empower businesses with the confidence and security they need to thrive in the digital age. We are not just service providers; we are partners in your success, working tirelessly to ensure that your IT environment is resilient, secure, and ready to support your growth.</p>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <p>Email: info@chatphishy.com.au</p>
+            <p>Phone: +61 3 1234 5678</p>
+            <p>Address: 123 Test St, Melbourne, VIC 3000, Australia</p>
+        </section>
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()">💬</button>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header" onclick="toggleChatbot()">Chat with Us</div>
+        <div class="chat-box" id="chatBox">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type a message..." />
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+        <script>
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const chatbotContainer = document.getElementById('chatbotContainer');
+    
+            function toggleChatbot() {
+                if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
+                    chatbotContainer.style.display = 'flex';
+                } else {
+                    chatbotContainer.style.display = 'none';
+                }
+            }
+    
+            function sendMessage() {
+                const message = chatInput.value;
+                if (message.trim() !== '') {
+                    appendMessage('You: ' + message, 'user');
+                    generateResponse(message);
+                    chatInput.value = '';
+                }
+            }
+    
+            function appendMessage(message, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'chat-message ' + (sender === 'user' ? 'user' : '');
+                messageElement.textContent = message;
+                chatBox.appendChild(messageElement);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+    
+            function generateResponse(userMessage) {
+                // Simple AI response
+                const response = 'Bot: ' + (userMessage.toLowerCase().includes('hello') ? 'Hello there! How can I assist you today?' : 'I am here to help you.');
+                setTimeout(() => appendMessage(response, 'bot'), 500); // Delay to simulate typing
+            }
+        </script>
+         
+        
+</style>
+    <footer>
+        <p>&copy; 2024 ChatPhishy.AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>
