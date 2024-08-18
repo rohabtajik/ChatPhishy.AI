@@ -1,0 +1,269 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Sets the font for the entire page to 'Segoe UI', with fallback options */
+    margin: 0; /* Removes default margin around the body */
+    padding: 0; /* Removes default padding around the body */
+    background-color: #f0f2f5; /* Sets a light gray background color for the page */
+}
+
+header {
+    background-color: #044859; /* Sets a dark teal background color for the header */
+    color: #fff; /* Sets the text color to white */
+    padding: 20px 0; /* Adds 20px padding on the top and bottom of the header */
+    text-align: center; /* Centers the text inside the header */
+}
+
+.header-image {
+    width: 60%; /* Makes the image span 60% of the header's width */
+    height: auto; /* Maintains the image's aspect ratio */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    margin-top: 20px; /* Adds 20px margin above the image */
+}
+
+nav {
+    display: flex; /* Uses flexbox layout for the navigation */
+    justify-content: center; /* Centers the navigation items horizontally */
+    background-color: #003c49; /* Sets a slightly darker teal background for the navigation */
+    padding: 10px 0; /* Adds 10px padding on the top and bottom of the navigation */
+}
+
+nav a {
+    color: #fff; /* Sets the text color of navigation links to white */
+    padding: 14px 20px; /* Adds 14px vertical padding and 20px horizontal padding to each link */
+    text-decoration: none; /* Removes the underline from navigation links */
+    text-transform: uppercase; /* Transforms the text to uppercase */
+    font-weight: bold; /* Makes the text bold */
+    font-size: 14px; /* Sets the font size to 14px */
+    transition: background-color 0.3s, color 0.3s; /* Adds a smooth transition effect for background color and text color changes */
+}
+
+nav a:hover {
+    background-color: #004d59; /* Changes the background color to a darker teal when hovering over a link */
+    color: #f8fcfc; /* Changes the text color to a very light teal when hovering */
+}
+
+.container {
+    max-width: 1200px; /* Sets the maximum width of the container to 1200px */
+    margin: 20px auto; /* Adds 20px margin on top and bottom, and centers the container horizontally */
+    padding: 20px; /* Adds 20px padding inside the container */
+    background-color: #fff; /* Sets the background color to white */
+    border-radius: 10px; /* Rounds the corners with a 10px radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the container */
+}
+
+h1, h2 {
+    color: #050c0c; /* Sets the text color to a dark shade for all h1 and h2 elements */
+    margin: 0 0 10px; /* Removes all margins except for a 10px bottom margin */
+}
+
+h1 {
+    font-size: 36px; /* Sets the font size of h1 elements to 36px */
+}
+
+h2 {
+    font-size: 28px; /* Sets the font size of h2 elements to 28px */
+    margin-bottom: 20px; /* Adds a 20px bottom margin to h2 elements */
+}
+
+.services {
+    margin-bottom: 40px; /* Adds a 40px bottom margin to the services section */
+}
+
+.services-header {
+    text-align: center; /* Centers the text in the services header */
+    margin-bottom: 20px; /* Adds a 20px bottom margin to the services header */
+}
+
+.services-content {
+    display: flex; /* Uses flexbox layout for the services content */
+    flex-wrap: wrap; /* Allows items to wrap onto multiple lines if necessary */
+    gap: 20px; /* Adds 20px space between items */
+    justify-content: space-between; /* Distributes items evenly with space between them */
+}
+
+.service-item {
+    flex: 1 1 calc(50% - 20px); /* Allows each service item to take up 50% of the container width, minus 20px for spacing */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    padding: 20px; /* Adds 20px padding inside each service item */
+    background-color: #eaf2f8; /* Sets a light blue background color for service items */
+    border: 1px solid #ddd; /* Adds a 1px solid light gray border */
+    border-radius: 8px; /* Rounds the corners with an 8px radius */
+    text-align: center; /* Centers the text inside service items */
+    transition: transform 0.3s, box-shadow 0.3s; /* Adds a smooth transition effect for transformation and shadow changes */
+}
+
+.service-item:hover {
+    transform: translateY(-5px); /* Moves the service item up by 5px when hovered */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Adds a larger shadow when hovered */
+}
+
+.service-item img {
+    width: 300px; /* Sets the image width to 300px */
+    height: 200px; /* Sets the image height to 200px */
+    object-fit: cover; /* Ensures the image covers the specified dimensions without distortion */
+    border-radius: 8px; /* Rounds the corners with an 8px radius */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow to the image */
+    margin-bottom: 10px; /* Adds 10px margin below the image */
+}
+
+.intro-text {
+    font-size: 24px; /* Sets the font size to 24px */
+    margin: 10px 0; /* Adds 10px margin on the top and bottom */
+}
+
+.about {
+    background-color: #eaf2f8; /* Sets a light blue background color for the About section */
+    padding: 40px; /* Adds 40px padding inside the About section */
+    border-radius: 8px; /* Rounds the corners with an 8px radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the About section */
+    text-align: justify; /* Justifies the text alignment */
+}
+
+.about h2 {
+    text-align: center; /* Centers the header text in the About section */
+}
+
+.about p {
+    line-height: 1.8; /* Sets the line height to 1.8 times the font size for better readability */
+    margin-bottom: 20px; /* Adds 20px margin below each paragraph */
+    max-width: 800px; /* Limits the maximum width of paragraphs to 800px */
+    margin-left: auto; /* Centers the paragraph horizontally within the container */
+    margin-right: auto; /* Centers the paragraph horizontally within the container */
+}
+
+.contact {
+    background-color: #f9f9f9; /* Sets a very light gray background color for the Contact section */
+    padding: 40px; /* Adds 40px padding inside the Contact section */
+    border-radius: 8px; /* Rounds the corners with an 8px radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the Contact section */
+    text-align: center; /* Centers the text in the Contact section */
+}
+
+footer {
+    text-align: center; /* Centers the text in the footer */
+    padding: 20px; /* Adds 20px padding inside the footer */
+    background-color: #002b36; /* Sets a dark background color for the footer */
+    color: #fff; /* Sets the text color to white */
+}
+
+/* Chatbot Styling */
+.chatbot-container {
+    position: fixed; /* Fixes the chatbot container's position relative to the viewport */
+    bottom: 20px; /* Positions it 20px from the bottom of the viewport */
+    right: 20px; /* Positions it 20px from the right edge of the viewport */
+    width: 320px; /* Sets the width of the chatbot container to 320px */
+    height: 400px; /* Sets the height of the chatbot container to 400px */
+    background-color: #fff; /* Sets the background color to white */
+    border-radius: 10px; /* Rounds the corners with a 10px radius */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow around the chatbot container */
+    display: none; /* Initially hidden */
+    flex-direction: column; /* Arranges child elements in a column */
+    overflow: hidden; /* Hides overflow content */
+    transition: all 0.3s ease-in-out; /* Adds a smooth transition effect for all properties */
+}
+
+.chatbot-header {
+    background-color: #003c49; /* Sets a dark teal background color for the chatbot header */
+    color: white; /* Sets the text color to white */
+    padding: 15px; /* Adds 15px padding inside the chatbot header */
+    text-align: center; /* Centers the text inside the chatbot header */
+    font-weight: bold; /* Makes the text bold */
+    border-radius: 10px 10px 0 0; /* Rounds the top corners of the header */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+}
+
+.chat-box {
+    flex-grow: 1; /* Allows the chat box to expand and fill available space */
+    overflow-y: auto; /* Adds vertical scroll if content overflows */
+    padding: 15px; /* Adds 15px padding inside the chat box */
+    background: #f9f9f9; /* Sets a very light gray background color */
+    border-top: 1px solid #ddd; /* Adds a light gray border on top */
+}
+
+.chat-input-container {
+    display: flex; /* Uses flexbox layout for the input container */
+    padding: 10px; /* Adds 10px padding inside the input container */
+    border-top: 1px solid #ddd; /* Adds a light gray border on top */
+    background-color: #eaf2f8; /* Sets a light blue background color */
+    border-radius: 0 0 10px 10px; /* Rounds the bottom corners of the container */
+}
+
+.chat-input {
+    flex-grow: 1; /* Allows the input field to expand and fill available space */
+    padding: 10px; /* Adds 10px padding inside the input field */
+    border: none; /* Removes the border from the input field */
+    border-radius: 5px; /* Rounds the corners of the input field */
+    font-size: 16px; /* Sets the font size to 16px */
+    outline: none; /* Removes the default outline on focus */
+}
+
+.send-button {
+    background-color: #003c49; /* Sets a dark teal background color for the send button */
+    color: white; /* Sets the text color to white */
+    border: none; /* Removes the border from the button */
+    padding: 10px; /* Adds 10px padding inside the button */
+    margin-left: 10px; /* Adds 10px margin on the left side of the button */
+    border-radius: 5px; /* Rounds the corners of the button */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    transition: background-color 0.3s; /* Adds a smooth transition effect for background color changes */
+}
+
+.send-button:hover {
+    background-color: #004d59; /* Changes the background color to a darker teal on hover */
+}
+
+.chat-message {
+    margin: 10px 0; /* Adds 10px margin on the top and bottom of chat messages */
+    padding: 10px; /* Adds 10px padding inside the chat message */
+    border-radius: 10px; /* Rounds the corners of the chat message */
+    background-color: #ececec; /* Sets a light gray background color for chat messages */
+    color: #333; /* Sets the text color to a dark gray */
+}
+
+.chat-message.user {
+    background-color: #003c49; /* Sets a dark teal background color for user messages */
+    color: white; /* Sets the text color to white for user messages */
+    align-self: flex-end; /* Aligns the user message to the end of the chat box */
+}
+
+.chatbot-button {
+    position: fixed; /* Fixes the button's position relative to the viewport */
+    bottom: 20px; /* Positions it 20px from the bottom of the viewport */
+    right: 20px; /* Positions it 20px from the right edge of the viewport */
+    background-color: #000000; /* Sets the background color to black */
+    color: white; /* Sets the text color to white */
+    border: none; /* Removes the border from the button */
+    border-radius: 50%; /* Makes the button round */
+    width: 60px; /* Sets the width to 60px */
+    height: 60px; /* Sets the height to 60px */
+    font-size: 24px; /* Sets the font size to 24px */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow around the button */
+    transition: background-color 0.3s, transform 0.3s; /* Adds a smooth transition effect for background color and scaling */
+}
+
+.chatbot-button:hover {
+    background-color: #004d59; /* Changes the background color to a darker teal on hover */
+    transform: scale(1.1); /* Scales up the button slightly on hover */
+}
+
+.close-chat-button {
+    background-color: #000000; /* Sets a black background color for the close button */
+    color: white; /* Sets the text color to white */
+    border: none; /* Removes the border from the button */
+    padding: 10px 20px; /* Adds 10px vertical padding and 20px horizontal padding */
+    font-size: 16px; /* Sets the font size to 16px */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    border-radius: 5px; /* Rounds the corners of the button */
+    margin: 10px; /* Adds 10px margin around the button */
+    transition: background-color 0.3s ease; /* Adds a smooth transition effect for background color changes */
+}
+
+.close-chat-button:hover {
+    background-color: #004d59; /* Changes the background color to a darker teal on hover */
+}
+
+.close-chat-container {
+    display: flex; /* Uses flexbox layout for the close button container */
+    justify-content: center; /* Centers the close button horizontally */
+    padding: 10px; /* Adds 10px padding inside the container */
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Specifies the character encoding (UTF-8) for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures the page is responsive to different devices and screen sizes -->
+    <title>ChatPhishy.AI</title> <!-- Sets the title of the webpage shown in the browser tab -->
+    <link rel="stylesheet" href="styles.css"> <!-- Links to an external CSS file named "styles.css" for styling the page -->
+</head>
+<body>
+    <header>
+        <h1>ChatPhishy.AI</h1> <!-- Main heading/title of the webpage -->
+        <p class="intro-text">Your trusted partner in Cyber Security and IT Solutions</p> <!-- A paragraph with the class "intro-text", providing a tagline for the website -->
+        <img src="project.jpg" alt="IT" class="header-image"> <!-- An image with the source "project.jpg", alternative text "IT", and class "header-image" for styling -->
+    </header>
+
+    <nav>
+        <a href="#services">Services</a> <!-- A navigation link that points to the "Services" section of the page -->
+        <a href="#about">About</a> <!-- A navigation link that points to the "About" section of the page -->
+        <a href="#contact">Contact</a> <!-- A navigation link that points to the "Contact" section of the page -->
+    </nav>
+
+    <div class="container"> <!-- A container div with the class "container" that holds the main content sections -->
+
+        <section id="services" class="services"> <!-- A section with the ID "services" and class "services" for the Services content -->
+            <div class="services-header">
+                <h2>Our Services</h2> <!-- A heading for the Services section -->
+            </div>
+            <div class="services-content"> <!-- A div for grouping the service items -->
+                <div class="service-item"> <!-- A div representing an individual service item -->
+                    <h3>Network Security</h3> <!-- A heading for the Network Security service -->
+                    <img src="network security.jpeg" alt="Network Security"> <!-- An image related to Network Security -->
+                    <p>Protect your network from threats and vulnerabilities.</p> <!-- A description of the Network Security service -->
+                </div>
+                <div class="service-item"> <!-- Another service item -->
+                    <h3>Digital Forensics</h3> <!-- A heading for the Digital Forensics service -->
+                    <img src="digital forensics.jpeg" alt="Digital Forensics"> <!-- An image related to Digital Forensics -->
+                    <p>Investigate and analyze digital evidence.</p> <!-- A description of the Digital Forensics service -->
+                </div>
+                <div class="service-item"> <!-- Another service item -->
+                    <h3>Phishing Detection</h3> <!-- A heading for the Phishing Detection service -->
+                    <img src="phishing detection.jpeg" alt="Phishing Detection"> <!-- An image related to Phishing Detection -->
+                    <p>Identify and block phishing attempts with advanced AI.</p> <!-- A description of the Phishing Detection service -->
+                </div>
+                <div class="service-item"> <!-- Another service item -->
+                    <h3>Cloud Solutions</h3> <!-- A heading for the Cloud Solutions service -->
+                    <img src="cloud solutions.jpeg" alt="Cloud Solutions"> <!-- An image related to Cloud Solutions -->
+                    <p>Secure and optimize your cloud infrastructure.</p> <!-- A description of the Cloud Solutions service -->
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about"> <!-- A section with the ID "about" and class "about" for the About content -->
+            <h2>About Us</h2> <!-- A heading for the About section -->
+            <p>At ChatPhishy.AI, we are committed to leading the way in cybersecurity and IT solutions. Our mission is to provide innovative and comprehensive services that protect businesses from evolving cyber threats while optimizing their IT infrastructure. By leveraging cutting-edge technology and best practices, we ensure our clients remain secure and competitive in a digital landscape.</p>
+            <p>Our team of seasoned cybersecurity professionals and IT experts brings decades of collective experience to the table. With a deep understanding of the latest threats and trends, we are equipped to handle complex security challenges and IT needs. Our experts are dedicated to staying ahead of the curve and continuously enhancing their skills to deliver top-notch solutions to our clients.</p>   
+            <p>We offer a wide range of services, from advanced threat detection and response to IT infrastructure management. Our offerings include vulnerability assessments, penetration testing, network security, and incident response, ensuring that every aspect of your IT environment is safeguarded. Additionally, we provide tailored IT management solutions to streamline operations and enhance efficiency, allowing you to focus on your core business objectives.</p>
+            <p>At ChatPhishy.AI, our mission is to empower businesses with the confidence and security they need to thrive in today's digital world. We take a proactive approach to cybersecurity and IT management, working closely with our clients to understand their unique needs and deliver customized solutions. Our commitment to excellence and customer satisfaction drives us to continuously innovate and improve, ensuring that we provide the highest level of service and protection.</p>
+            
+        </section>
+
+        <section id="contact" class="contact"> <!-- A section with the ID "contact" and class "contact" for the Contact content -->
+            <h2>Contact Us</h2> <!-- A heading for the Contact section -->
+            <p>Email: info@chatphishy.com.au</p> <!-- Contact email -->
+            <p>Phone: +61 3 1234 5678</p> <!-- Contact phone number -->
+            <p>Address: 123 Test St, Melbourne, VIC 3000, Australia</p> <!-- Contact address -->
+        </section>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()">💬</button> <!-- A button with the class "chatbot-button" that, when clicked, calls the `toggleChatbot()` function to show/hide the chatbot -->
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer" style="display:none;"> <!-- Set the chatbot container to initially be hidden -->
+        <div class="chatbot-header" onclick="toggleChatbot()">Chat with Us</div> <!-- A header for the chatbot that toggles the chatbot visibility when clicked -->
+        <div class="chat-box" id="chatBox"> <!-- A div with the class "chat-box" and ID "chatBox" where chat messages will appear -->
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input-container"> <!-- A div for holding the chat input field and send button -->
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)" /> <!-- An input field for typing messages, with an event listener to handle Enter key press -->
+            <button class="send-button" onclick="sendMessage()">Send</button> <!-- A button to send the typed message, calling the `sendMessage()` function -->
+        </div>
+        <!-- Close Chat Button -->
+        <button class="close-chat-button" onclick="toggleChatbot()">Close Chat</button> <!-- A button to close the chatbot by calling the `toggleChatbot()` function -->
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chatBox'); // JavaScript variable to reference the chat box where messages will appear
+        const chatInput = document.getElementById('chatInput'); // A JavaScript variable to reference the chat input field 
+        const chatbotContainer = document.getElementById('chatbotContainer'); // A JavaScript variable to reference the chatbot container
+
+        function toggleChatbot() {
+            if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
+                chatbotContainer.style.display = 'flex'; // Show the chatbot if it is currently hidden 
+            } else {
+                chatbotContainer.style.display = 'none'; // Hide the chatbot if it is currently visible 
+            }
+        }
+
+        function sendMessage() {
+            const message = chatInput.value;
+            if (message.trim() !== '') { // Check if the input message is not empty 
+                appendMessage('You: ' + message, 'user'); // Call `appendMessage()` to add the user's message to the chat box 
+                generateResponse(message); // Call `generateResponse()` to simulate a bot response 
+                chatInput.value = ''; // Clear the chat input field
+            }
+        }
+
+        function appendMessage(message, sender) {
+            const messageElement = document.createElement('div'); // Create a new div element for the message 
+            messageElement.className = 'chat-message ' + (sender === 'user' ? 'user' : ''); // Add the appropriate class depending on the sender (user or bot) 
+            messageElement.textContent = message; // Set the message text 
+            chatBox.appendChild(messageElement); // Append the message to the chat box 
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom of the chat box to show the new message 
+        }
+
+        function generateResponse(userMessage) {
+            const response = 'Bot: ' + (userMessage.toLowerCase().includes('hello') ? 'Hello there! How can I assist you today?' : 'I am here to help you.');
+            setTimeout(() => appendMessage(response, 'bot'), 500); // Generate a bot response with a slight delay to simulate typing 
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage(); // If the Enter key is pressed, send the message
+            }
+        }
+
+        function closeChatbot() {
+            chatbotContainer.style.display = 'none'; // Hide the chatbot container 
+            window.scrollTo(0, 0); // Optionally scroll to the top of the page 
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2024 ChatPhishy.AI. All rights reserved.</p> <!-- Footer with copyright information -->
+    </footer>
+</body>
+</html>
