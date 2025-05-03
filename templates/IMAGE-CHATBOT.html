@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+   <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, #004080, #0059b3);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav img {
+            width: 75px;
+            height: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Main Container */
+        #container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 60px);
+            margin-top: 60px;
+        }
+
+        /* Sidebar for Chat History */
+        #sidebar {
+            width: 25%;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            margin-top: 40px;
+        }
+
+        #sidebar h3 {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            border-bottom: 1px solid white;
+            padding-bottom: 10px;
+        }
+
+        #history-list {
+            list-style-type: none;
+            padding: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        #history-list li {
+            padding: 10px;
+            background-color: #444;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        #history-list li:hover {
+            background-color: #555;
+        }
+
+        /* Chat Area */
+        #chat-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+        }
+
+        #chat-header {
+            padding: 15px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #chatbox {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+
+        .message {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #e5e5e5;
+            color: black;
+            align-self: flex-start;
+        }
+
+        /* Input Container */
+        #input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            bottom: 0;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-right: 10px;
+            outline: none;
+            background-color: #f9f9f9;
+        }
+
+        #send-btn {
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #send-btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Chatbox Styling */
+        #chatbox {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center chat messages */
+            background-color: #fff;
+        }
+
+
+
+
+
+
+
+        #options-container {
+    position: fixed;
+    top: 95px;
+    left: 35%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 8px;
+    text-align: center;
+    display: block;
+}
+
+.category-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 2px solid #007bff;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px; /* Ensures buttons are wide enough */
+}
+
+.category-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #004080);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.category-btn i {
+    margin-right: 10px; /* Adds spacing between icon and text */
+}
+
+/* Add Icons to the buttons */
+.category-btn.url-btn {
+    background: #28a745;
+}
+
+.category-btn.email-btn {
+    background: #ff9900;
+}
+
+.category-btn.image-btn {
+    background: #dc3545;
+}
+
+/* Hover effects for individual category buttons */
+.category-btn.url-btn:hover {
+    background: #218838;
+}
+
+.category-btn.email-btn:hover {
+    background: #e68900;
+}
+
+.category-btn.image-btn:hover {
+    background: #c82333;
+}
+
+
+#new-chat-btn {
+    position: fixed;
+    top: 105px;
+    right: 7px;
+    width: 48px;
+    height: 48px;
+    background-color: #ffffff;  /* White background */
+    border: none;  /* Remove border */
+    font-size: 30px;  /* Large + icon size */
+    color: #007bff;  /* Blue color for the icon */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+#new-chat-btn:hover {
+    background-color: #f1f1f1;  /* Light grey background on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);  /* Slightly larger shadow on hover */
+    transform: scale(1.05);  /* Slight scale-up effect on hover */
+}
+
+#new-chat-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #007bff;  /* Blue color for the icon */
+    transition: all 0.3s ease;
+}
+
+#new-chat-btn:hover svg {
+    fill: #0056b3;  /* Darker blue when hovering over the button */
+}
+
+
+
+
+
+
+
+        /* Scrollbar Styling */
+        #chatbox::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chatbox::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        #chatbox::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        #chatbox::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Action Buttons */
+        .action-button {
+            background-color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #e6b800;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #2c2c2c;
+        }
+
+        body.dark-mode #container {
+            background-color: #333;
+        }
+
+        body.dark-mode #sidebar {
+            background-color: #444;
+        }
+
+        body.dark-mode #chat-header {
+            background-color: #006bb3;
+        }
+
+        body.dark-mode #chatbox {
+            background-color: #444;
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 35%;
+            }
+            #chat-container {
+                width: 65%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #sidebar {
+                display: none;
+            }
+            #chat-container {
+                width: 100%;
+            }
+            #input-container {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+
+
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot_url') }}" class="active">Chatbot</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('contactus') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div id="container">
+    <!-- Sidebar for Chat History -->
+    <div id="sidebar">
+        <h3>Chat History</h3>
+        <ul id="history-list">
+            <!-- Chat history items will be dynamically inserted here -->
+        </ul>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-container">
+        <div id="chat-header">Image Phishing Detection Chatbot</div>
+        <div id="chatbox"></div>
+
+        <!-- Input Container -->
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Type your message..." />
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- New Chat Button -->
+<button id="new-chat-btn"> 📝</button>
+
+
+
+<!-- Buttons inside chatbot where the system asks the question -->
+<div id="options-container" style="text-align: center; padding: 10px;">
+    <button class="category-btn url-btn" data-category="URL">
+        <i class="fas fa-link"></i> URL
+    </button>
+    <button class="category-btn email-btn" data-category="Email">
+        <i class="fas fa-envelope"></i> Email
+    </button>
+    <button class="category-btn image-btn" data-category="Image">
+        <i class="fas fa-image"></i> Image
+    </button>
+</div>
+
+
+
+<script>
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const category = button.getAttribute('data-category');
+            console.log(`Redirecting to category: ${category}`);  // Debugging line
+            if (category === 'URL') {
+    window.location.href = "/chatbot/url";
+} else if (category === 'Email') {
+    window.location.href = "/chatbot/email";
+} else if (category === 'Image') {
+    window.location.href = "/chatbot/image";
+}
+
+        });
+    });
+
+</script>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+       const chatbox = document.getElementById('chatbox');
+       const sendButton = document.getElementById('send-btn');
+       const userInput = document.getElementById('user-input');
+       const historyList = document.getElementById('history-list');
+       let currentChat = [];  // Stores messages of the current chat (both user and bot)
+       let chatHistory = [];  // Stores all chat sessions
+
+       // Function to display messages in the chatbox
+       function displayMessage(text, sender) {
+           const messageDiv = document.createElement('div');
+           messageDiv.classList.add('message');
+           messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+           messageDiv.textContent = text;
+           chatbox.appendChild(messageDiv);
+           chatbox.scrollTop = chatbox.scrollHeight;  // Scroll to the bottom
+       }
+
+       // Function to save the current chat to history
+       function saveChatToHistory() {
+           const chatTitle = `Chat #${chatHistory.length + 1}`;
+           chatHistory.push(currentChat);  // Save the entire chat session to history
+           const chatItem = document.createElement('li');
+           chatItem.textContent = chatTitle;
+           chatItem.dataset.chatIndex = chatHistory.length - 1;  // Save the index of this chat
+
+           // Add click event to load this chat from history
+           chatItem.addEventListener('click', function () {
+               loadChatFromHistory(chatItem.dataset.chatIndex);
+           });
+
+           historyList.appendChild(chatItem);
+       }
+
+       // Function to load a chat from history
+       function loadChatFromHistory(chatIndex) {
+           const chat = chatHistory[chatIndex];
+           chatbox.innerHTML = '';  // Clear current chat
+           chat.forEach(msg => {
+               displayMessage(msg.text, msg.sender);
+           });
+       }
+
+
+
+
+
+       // Event Listener for the Send button
+       sendButton.addEventListener('click', function () {
+           const userMessage = userInput.value.trim();
+           if (userMessage) {
+               displayMessage(userMessage, 'user');
+               currentChat.push({ text: userMessage, sender: 'user' });  // Save user message
+               displayMessage("Analyzing, please wait...", 'bot');
+               currentChat.push({ text: "Analyzing, please wait...", sender: 'bot' });  // Save bot message for waiting
+               sendToBackend(userMessage);  // Send URL to backend for analysis
+               userInput.value = '';
+           }
+       });
+
+       // Event Listener for Enter key in input field
+       userInput.addEventListener('keypress', function (e) {
+           if (e.key === 'Enter') sendButton.click();
+       });
+
+       // New chat button to reset and start a new chat
+       document.getElementById('new-chat-btn').addEventListener('click', function () {
+           saveChatToHistory();
+           chatbox.innerHTML = '';
+           currentChat = [];
+           displayMessage("Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.", 'bot');
+           currentChat.push({ text: "Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.", sender: 'bot' }); // Save initial bot message
+       });
+
+       // Initial message
+       displayMessage("Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.", 'bot');
+       currentChat.push({ text: "Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.", sender: 'bot' }); // Save initial bot message
+
+
+
+
+
+// Function to send URL to the backend for analysis
+function sendToBackend(userMessage) {
+    // Make POST request to Flask API
+    fetch("http://127.0.0.1:5000/analyze_url", {  // Adjust the route if necessary
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ "url": userMessage })  // Send the URL as JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Find the last bot message (which is "Analyzing, please wait...")
+        const botMessages = document.querySelectorAll('.bot-message');
+        const lastBotMessage = botMessages[botMessages.length - 1];
+
+        // Define the final message to display
+        let finalMessage;
+
+        if (data.error) {
+            // If there's an error (e.g., no images found or other issues)
+            finalMessage = data.error;
+        } else {
+            // If we have results
+            finalMessage = data.results.map(result => {
+                return `
+                    <div>
+                        <strong>Image URL:</strong> <a href="${result.image_url}" target="_blank">${result.image_url}</a><br>
+                        <strong>Malicious Probability:</strong> ${result.malicious_probability}
+                    </div>
+                `;
+            }).join('<br>');
+        }
+
+        if (lastBotMessage && lastBotMessage.textContent.includes('Analyzing')) {
+            // Update the "Analyzing" message with the final message
+            lastBotMessage.innerHTML = finalMessage;  // Use innerHTML to allow links
+            currentChat[currentChat.length - 1].text = finalMessage; // Update chat history
+        } else {
+            // If the last message wasn't found, just add a new message
+            const resultMessage = document.createElement('div');
+            resultMessage.className = "message bot-message";
+            resultMessage.innerHTML = finalMessage;  // Use innerHTML for displaying links
+            chatbox.appendChild(resultMessage);
+            chatbox.scrollTop = chatbox.scrollHeight;
+            currentChat.push({ text: finalMessage, sender: 'bot' });
+        }
+    })
+    .catch(error => {
+        // Handle error scenario
+        console.error("Error:", error);
+        const botMessages = document.querySelectorAll('.bot-message');
+        const lastBotMessage = botMessages[botMessages.length - 1];
+        const errorMsg = "❌ An error occurred while analyzing the URL.";
+
+        if (lastBotMessage && lastBotMessage.textContent.includes('Analyzing')) {
+            lastBotMessage.textContent = errorMsg;
+            currentChat[currentChat.length - 1].text = errorMsg;
+        }
+    });
+}
+
+
+});
+</script>
+
+
+
+</body>
+</html>

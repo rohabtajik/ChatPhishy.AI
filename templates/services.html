@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - AI Phishing Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, #004080, #0059b3);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav img {
+            width: 75px; 
+            height: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Highlight the active page link */
+        nav ul li a.active {
+            color: #ffcc00;
+        }
+
+        /* Header */
+        header  {
+            background-color:  #003366;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 40px; 
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.4rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin: 40px 0;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        main section h2 {
+            font-size: 2rem;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        main section p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.7rem;
+        }
+
+        /* Button Styling */
+        .service-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffffff;  /* Matching hover color from nav links */
+            color: #003366;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .service-btn:hover {
+            background-color: #0059b3; /* A deeper blue for hover */
+            color: #ffffff;
+            transform: scale(1.05); /* Slightly enlarges on hover */
+        }
+
+        /* Service Boxes */
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .service-box {
+            background: #003366;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 8px;
+            flex-basis: calc(33.333% - 40px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-box h2 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-box p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .service-box a {
+            text-decoration: none;
+            color: #f3f4f6;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .sub-service-box {
+    display: flex;
+    justify-content: center;  /* Centers the button horizontally */
+    align-items: center;      /* Centers the button vertically */
+    height: 100%;             /* Ensures the div has enough height to center vertically */
+}
+
+.service-btn {
+    text-align: center;       /* Centers the text inside the button */
+    padding: 10px 20px;       /* Add some padding to the button */
+    background-color: #007bff; /* Add background color (blue) */
+    color: white;             /* Text color */
+    text-decoration: none;    /* Remove underline from the link */
+    border-radius: 5px;       /* Optional: rounded corners */
+    font-size: 16px;          /* Optional: font size */
+}
+
+.service-btn:hover {
+    background-color: #0056b3; /* Optional: change color on hover */
+}
+
+
+        /* Category link styles */
+        .category-link {
+            display: inline-block;
+            padding: 15px 25px;
+            background-color: #003366; /* Blue background for consistency */
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            margin-left: 15px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            height: auto;
+            font-size: 1.2rem;
+        }
+
+        .category-link:hover {
+            background-color: #0059b3; /* A deeper blue for hover */
+            transform: translateY(-5px); /* Slightly lifts the link */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-link i {
+            font-size: 2rem; /* Adjust icon size */
+            margin-bottom: 10px; /* Space between icon and text */
+        }
+
+        .category-link span {
+            display: block;
+            margin-top: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .category-link:hover span {
+            color: #ffcc00; /* Highlight the text color on hover */
+        }
+    </style>
+</head>
+<body>
+    
+<!-- Navigation Bar -->
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}" >Chatbot</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}" class="active">Services</a></li>
+            <li><a href="{{ url_for('contactus') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <section class="new-feature">
+        <h1>New Feature</h1>
+        <h2>AI Based Phishing Detection Chatbot</h2>
+        <p>Our cutting-edge AI-based phishing detection chatbot helps secure your data by identifying phishing attacks in real time. It's an intelligent, robust solution that adapts to evolving threats.</p>
+        
+      <!-- AI based phishing detection chatbot -->
+<div class="sub-service-box">
+    <a href="chatbot.html" class="service-btn category-link chatbot-link" data-category="Chatbot">
+        AI-based phishing detection chatbot
+    </a>
+</div>
+
+        
+        <!-- Links inside chatbot where the system asks the question -->
+        <div id="options-container" style="text-align: center; padding: 30px;">
+            <a href="URL-CHATBOT.html" class="service-btn category-link url-link" data-category="URL">
+                <i class="fas fa-link"></i> <span>URL Detection</span>
+            </a>
+            <a href="EMAIL-CHATBOT.html" class="service-btn category-link email-link" data-category="Email">
+                <i class="fas fa-envelope"></i> <span>Email Detection</span>
+            </a>
+            <a href="IMAGE-CHATBOT.html" class="service-btn category-link image-link" data-category="Image">
+                <i class="fas fa-image"></i> <span>Image Detection</span>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('.category-link').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();  // Prevent default link behavior
+                const category = button.getAttribute('data-category');
+                console.log(`Redirecting to category: ${category}`);
+    
+                // Redirect based on category
+                if (category === 'URL') {
+                    window.location.href = "/chatbot/url";
+                } else if (category === 'Email') {
+                    window.location.href = "/chatbot/email";
+                } else if (category === 'Image') {
+                    window.location.href = "/chatbot/image";
+                } else if (category === 'Chatbot') {
+                    window.location.href = "/chatbot";  // Adjust this based on your chatbot page URL
+                }
+            });
+        });
+    </script>
+    
+    
+    </script>
+
+        <section class="other-services">
+            <h2>Other Services</h2>
+            <div class="services">
+                <div class="service-box">
+                    <h2>CRIMO (TM)</h2>
+                    <p>Crime Intelligence and Monitoring.</p>
+                    
+                </div>
+                <div class="service-box">
+                    <h2>AgroSense (TM)</h2>
+                    <p>Agricultural IOT Sensor Dashboard.</p>
+                   
+                </div>
+                <div class="service-box">
+                    <h2>FakeDetect (TM)</h2>
+                    <p>Fake News Detector.</p>
+                  
+                </div>
+                <div class="service-box">
+                    <h2>AWPM (TM)</h2>
+                    <p>Air and Water Pollution Monitoring.</p>
+                   
+                </div>
+                <div class="service-box">
+                    <h2>FirePredict (TM)</h2>
+                    <p>Bush Fire Prediction and Analysis.</p>
+               
+                </div>
+                <div class="service-box">
+                    <h2>CovMap (TM)</h2>
+                    <p>Covid Heatmap Analysis.</p>
+                
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <!-- Footer -->
+     <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

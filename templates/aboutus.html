@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Declares the document is in English -->
+<head>
+    <meta charset="UTF-8"> <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes it responsive on all devices -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> <!-- Ensures compatibility with IE browsers -->
+    <title>About Us - AusDAIS</title> <!-- Title shown on browser tab -->
+
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            box-sizing: border-box; /* Ensures padding doesn’t affect width/height */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Sets global font */
+            background-color: #f9f9f9; /* Light grey background */
+            color: #333; /* Dark grey text */
+            line-height: 1.6; /* Increases spacing between lines */
+        }
+
+        /* Navigation bar styles */
+        nav {
+            background: linear-gradient(135deg, #004080, #0059b3); /* Blue gradient */
+            padding: 15px 0;
+            position: fixed; /* Stays at top on scroll */
+            width: 100%;
+            top: 0;
+            z-index: 1000; /* Stacks above everything */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow under navbar */
+        }
+
+        nav .container {
+            display: flex; /* Horizontal layout */
+            justify-content: space-between; /* Space between logo & nav items */
+            align-items: center; /* Vertical centering */
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto; /* Center horizontally */
+        }
+
+        nav img {
+            width: 75px; /* Logo width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        nav ul {
+            list-style: none; /* No bullet points */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Horizontal list */
+        }
+
+        nav ul li {
+            margin-left: 30px; /* Spacing between nav items */
+        }
+
+        nav ul li a {
+            color: #fff; /* White text */
+            text-decoration: none; /* Remove underline */
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease; /* Smooth effects */
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00; /* Yellow on hover */
+            transform: scale(1.1); /* Slight grow effect */
+        }
+
+        nav ul li a.active {
+            color: #ffcc00; /* Highlights current page */
+        }
+
+        /* Header/banner section */
+        header {
+            background-color: #003366; /* Dark blue */
+            color: white;
+            padding: 55px 0; /* Top & bottom padding */
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            margin-top: 70px; /* Push content below navbar */
+        }
+
+        header h1 {
+            font-size: 3.5rem; /* Large heading */
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 1.4rem; /* Subtitle */
+        }
+
+        /* Section containing main content */
+        section {
+            padding: 40px 20px; /* Space around content */
+            margin: 20px auto;
+            max-width: 1200px;
+            background-color: #ffffff; /* White background */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+        }
+
+        section h2 {
+            font-size: 2rem;
+            color: #003366; /* Dark blue heading */
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            color: #555555; /* Medium gray text */
+            margin-bottom: 20px;
+            text-align: justify; /* Align text evenly */
+        }
+
+        /* Reusable button style */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            color: #fff;
+            background-color: #004080;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px; /* Pill-shaped button */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #003366;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer styles */
+        footer {
+            background: #003366; /* Dark blue */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Top shadow */
+            margin-top: 40px; /* Space above footer */
+        }
+
+        footer p {
+            font-size: 0.7rem; /* Small text */
+        }
+    </style>
+</head>
+<body>
+    
+<!-- NAVIGATION BAR -->
+
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+
+
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}" >Chatbot</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}"class="active">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('contactus') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HEADER SECTION -->
+<header>
+    <div class="container">
+        <h1>WELCOME TO AUSDAIS</h1> <!-- Main heading -->
+        <p>Solving real-world data challenges through innovation and analytics</p> <!-- Subtitle -->
+    </div>
+</header>
+
+<!-- ABOUT US SECTION -->
+<section id="about">
+    <div class="container">
+        <h2>About Us</h2> <!-- Section heading -->
+        <p>
+            With roots in both academia and research communities, AusDAIS has always been devoted to simplifying data, 
+            sharing knowledge, and pursuing innovation. Founded in Australia, AusDAIS brings together data engineering, 
+            science, and analytics to solve present and future challenges.
+        </p>
+        <p>
+            We are a Melbourne-based Data Analytics hub with a passion for innovation and solving complex real-world 
+            data challenges. AusDAIS experts have accomplished various real-world data challenge projects. Our aim is 
+            to prepare future talents and improve their skills for future industry challenges.
+        </p>
+    </div>
+</section>
+
+<!-- FOOTER SECTION -->
+<footer>
+    <div class="container">
+        <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p> <!-- Displays current year using Flask variable -->
+    </div>
+</footer>
+
+</body>
+</html>

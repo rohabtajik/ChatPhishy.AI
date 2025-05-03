@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Sets language to English -->
+<head>
+    <meta charset="UTF-8"> <!-- Character encoding for proper text display -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes page responsive on all devices -->
+    <title>AUSDIAS</title> <!-- Title shown in the browser tab -->
+
+    <!-- Importing 'Poppins' font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* General styles for the entire body */
+        body {
+            font-family: 'Poppins', sans-serif; /* Sets font style */
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: linear-gradient(135deg, #f4f4f4, #e0e0e0); /* Light grey gradient background */
+        }
+
+        h1, h2, p {
+            margin: 0; /* Removes default margins */
+        }
+
+        /* Navigation Bar Styles */
+        nav {
+            background: linear-gradient(135deg, #004080, #0059b3); /* Blue gradient background */
+            padding: 15px 0;
+            position: fixed; /* Keeps it at the top on scroll */
+            width: 100%;
+            top: 0;
+            z-index: 1000; /* Ensures nav stays above all content */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+        }
+
+        nav .container {
+            display: flex; /* Horizontal layout */
+            justify-content: space-between; /* Space between logo and menu */
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto; /* Centered container */
+        }
+
+        nav img {
+            width: 75px;
+            height: auto;
+        }
+
+        nav ul {
+            list-style: none; /* Removes bullet points */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Horizontal list */
+        }
+
+        nav ul li {
+            margin-left: 30px; /* Space between menu items */
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00; /* Yellow on hover */
+            transform: scale(1.1); /* Grows slightly */
+        }
+
+        nav ul li a.active {
+            color: #ffcc00; /* Yellow for active page */
+        }
+
+        /* General section styles */
+        section {
+            padding: 30px 30px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        section img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover; /* Maintains aspect ratio */
+            display: block;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-content {
+            text-align: center;
+        }
+
+        .text-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            color: #fff;
+            background-color: #004080;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #003366;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* About Us Section Layout */
+        .aboutus {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 100px; /* Space below nav */
+        }
+
+        .aboutus .text-content {
+            flex: 1;
+            max-width: 50%;
+            text-align: justify;
+        }
+
+        .aboutus img {
+            flex: 1;
+            max-width: 50%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Chatbot Section */
+        .chatbot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .chatbot img {
+            flex: 1;
+            max-width: 50%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot .text-content {
+            flex: 1;
+            max-width: 50%;
+            text-align: justify;
+        }
+
+        /* Sub-Services Cards */
+        .sub-services {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sub-service-box {
+            background: #e0e0e0;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            flex-basis: calc(50% - 40px); /* Two per row */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sub-service-box:hover {
+            transform: translateY(-10px); /* Lifts box */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sub-service-box h3 {
+            color: #003366;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .sub-service-box p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        .contactus {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contactus .text-content {
+            flex: 1;
+            max-width: 50%;
+            text-align: justify;
+        }
+
+        .contactus img {
+            flex: 1;
+            max-width: 50%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Services Section */
+        .services {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #d4eaf1, #f9f9f9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .services img {
+            flex: 1;
+            max-width: 50%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .services .text-content {
+            flex: 1;
+            max-width: 50%;
+            text-align: justify;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #004080;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.7rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+
+
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}" >Chatbot</a></li>
+            <li><a href="{{ url_for('dashboard') }}"class="active">Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('contactus') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- About Us Section -->
+<section class="aboutus">
+    <div class="text-content">
+        <p>Welcome to our website! We are a team dedicated to delivering top-notch services. Here’s a brief overview of what we do and why we’re the best at it.</p>
+        <a href="{{ url_for('aboutus') }}" class="btn" target="_blank">About Us</a>
+    </div>
+    <img src="{{ url_for('static', filename='images/aboutus.jpg') }}" alt="About Us Image" loading="lazy">
+</section>
+
+<!-- Chatbot Feature Section -->
+<section class="chatbot">
+    <img src="{{ url_for('static', filename='images/chatbot.jpg') }}" alt="Chatbot Image" loading="lazy">
+    <div class="text-content">
+        <p>Our recently developed <span class="highlight">AI Chatbot</span> is designed to revolutionize the way you interact with technology. Get instant support, personalized answers, and a seamless customer experience like never before.</p>
+        <a href="{{ url_for('contactus') }}" class="btn" target="_blank">Contact Us</a>
+    </div>
+</section>
+
+<!-- Contact Us Section -->
+<section class="contactus">
+    <div class="text-content">
+        <p>We’re here to help. Get in touch through our contact form or visit us at our address listed below.</p>
+        <a href="{{ url_for('contactus') }}" class="btn" target="_blank">Contact Us</a>
+    </div>
+    <img src="{{ url_for('static', filename='images/contactus.jpg') }}" alt="Contact Us Image" loading="lazy">
+</section>
+
+<!-- Services Section -->
+<section class="services">
+    <img src="{{ url_for('static', filename='images/services.jpg') }}" alt="Services Image" loading="lazy">
+    <div class="text-content">
+        <p>We offer a wide range of services to meet your business needs, including IT consulting, cybersecurity, and more. Explore our services to find the best solution for your business.</p>
+        <a href="{{ url_for('services') }}" class="btn" target="_blank">Services</a>
+    </div>
+</section>
+
+
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
