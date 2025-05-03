@@ -1,0 +1,208 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Header Styles */
+header {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo img {
+    max-height: 50px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    padding: 0.5rem 1rem;
+    display: block;
+    color: #333;
+}
+
+.nav-menu a:hover {
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    padding: 0.5rem 1rem;
+    color: #333;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+}
+
+/* Main Section Styles */
+main {
+    padding: 2rem;
+}
+
+.form-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.contact-form label {
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.contact-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.contact-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 2rem 0;
+}
+
+.footer-logo img {
+    max-height: 40px;
+}
+
+.footer-logo p {
+    margin: 0.5rem 0;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.footer-links div {
+    max-width: 200px;
+}
+
+.footer-links h4 {
+    margin-bottom: 1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #ddd;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-links div {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo img {
+        max-height: 40px;
+    }
+
+    .footer-logo img {
+        max-height: 30px;
+    }
+}
