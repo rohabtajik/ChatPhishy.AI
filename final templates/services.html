@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - AI Phishing Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            --secondary-bg:  #f3f4f6 ;
+            --accent-blue: #1e88e5;
+            --accent-purple: #a855f7;
+            --text-primary: #111827;
+            --text-secondary: #9ca3af;
+            --card-bg: rgba(39, 39, 42, 0.8);
+        --padding-bg: #ffffff ;  /* New light blue color for padding background */
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Apply the gradient animation to the background */
+            background: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+/* Navigation */
+nav {
+    padding: 1.2rem 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav .logo img {
+    width: 60px;
+    transition: 0.3s ease;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* For Firefox */
+    color: transparent; /* Fallback */
+    transform: translateY(-3px);
+    font-weight: 600;
+}
+
+ .wrapper {
+            width: 420px;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: 100px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+
+            max-width: 1100px;
+    margin:2rem auto;
+    padding: 2rem 1rem; /* top-bottom: 2rem, left-right: 1rem */
+    background: var(--padding-bg);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+
+        h1, h2 {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+    color:black;
+            margin-bottom: 1.5rem;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-box {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .category-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 212, 191, 0.3);
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+       /* Footer */
+footer {
+    color: #000;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+
+       @media (max-width: 600px) {
+    nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    nav ul li a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+        display: block;
+        width: 100%;
+    }
+
+    nav .logo {
+        margin-bottom: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+            section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}"><i class="fas fa-robot"></i> Assistant</a></li>
+            <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{{ url_for('services') }}" class="active"><i class="fas fa-shield-alt"></i> Services</a></li>
+            <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+    <main class="container">
+        <section class="new-feature">
+<h1 style="text-align:center; font-size: 2.8rem; margin-bottom: 0px;">Our Latest Innovation</h1>
+            <h2 style="text-align:center; font-size: 2rem; margin-bottom: 20px;">AI-Based Phishing Detection Chatbot</h2>
+            <p style="text-align:center; max-width: 800px; margin: 0 auto 30px auto; font-size: 1.2rem; color: #000;">
+                Stay protected with our intelligent AI chatbot that identifies phishing threats in real time.
+                Whether it's a suspicious email, URL, or image, our solution ensures your digital safety with cutting-edge machine learning.
+            </p>
+
+            <div class="options-container">
+                <a href="URL-CHATBOT.html" class="category-link" data-category="URL">
+                    <i class="fas fa-link"></i>
+                    <span>URL Detection</span>
+                </a>
+                <a href="EMAIL-CHATBOT.html" class="category-link" data-category="Email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Detection</span>
+                </a>
+                <a href="IMAGE-CHATBOT.html" class="category-link" data-category="Image">
+                    <i class="fas fa-image"></i>
+                    <span>Image Detection</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="other-services">
+            <h2>Other Services</h2>
+            <div class="services">
+                <div class="service-box">
+                    <h2>CRIMO (TM)</h2>
+                    <p>Crime Intelligence and Monitoring.</p>
+                </div>
+                <div class="service-box">
+                    <h2>AgroSense (TM)</h2>
+                    <p>Agricultural IOT Sensor Dashboard.</p>
+                </div>
+                <div class="service-box">
+                    <h2>FakeDetect (TM)</h2>
+                    <p>Fake News Detector.</p>
+                </div>
+                <div class="service-box">
+                    <h2>AWPM (TM)</h2>
+                    <p>Air and Water Pollution Monitoring.</p>
+                </div>
+                <div class="service-box">
+                    <h2>FirePredict (TM)</h2>
+                    <p>Bush Fire Prediction and Analysis.</p>
+                </div>
+                <div class="service-box">
+                    <h2>CovMap (TM)</h2>
+                    <p>Covid Heatmap Analysis.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.category-link').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const category = button.getAttribute('data-category');
+
+                if (category === 'URL') {
+                    window.location.href = "/chatbot/url";
+                } else if (category === 'Email') {
+                    window.location.href = "/chatbot/email";
+                } else if (category === 'Image') {
+                    window.location.href = "/chatbot/image";
+                } else if (category === 'Chatbot') {
+                    window.location.href = "/chatbot";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

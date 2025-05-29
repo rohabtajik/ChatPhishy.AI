@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AusDAIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+            :root {
+            --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            --secondary-bg: rgba(255, 255, 255, 0.8);
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-orange: #fb8c00;
+            --accent-purple: #9b51e0;
+            --accent-red: #e53935;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: rgba(243, 244, 246, 0.9);
+            --button-hover: #ff4081;
+        }
+
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+       body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(-45deg, #c6f0ff, #fce3ff, #e0f7fa, #fcbfdf);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+       /* Navigation */
+nav {
+    padding: 1.2rem 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav .logo img {
+    width: 60px;
+    transition: 0.3s ease;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color:black;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--accent-blue);
+    transform: translateY(-3px);
+    font-weight: 600;
+}
+
+nav ul li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* for Firefox */
+    color: transparent; /* fallback */
+    transform: translateY(-3px);
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    nav ul li a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+        display: block;
+        width: 100%;
+    }
+
+    nav .logo {
+        margin-bottom: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+}
+.unified-box {
+    background: white;
+    padding: 3rem 4rem;
+    border-radius: 1rem;
+    max-width: 1100px;
+    margin:9.69rem auto 3rem; /* some top margin to clear fixed nav */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Remove previous paddings and background */
+header {
+    padding: 0;
+    margin: 0 0 2rem 0;
+    background: none;
+}
+
+section {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    text-align: justify; /* keep section text left aligned */
+}
+
+/* Adjust header texts */
+header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+header p {
+    color: black;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Section styles inside unified box */
+section h2 {
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+}
+
+section p {
+    color:black;
+    margin-bottom: 1rem;
+     font-size: 1.2rem;
+}
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 212, 191, 0.3);
+        }
+
+   /* Footer */
+footer {
+    color: #000;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            header {
+                padding: 6rem 1rem 2rem;
+            }
+
+            section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="accent-blue">
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}"><i class="fas fa-robot"></i> Assistant</a></li>
+            <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}" class="active"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{{ url_for('services') }}"><i class="fas fa-shield-alt"></i> Services</a></li>
+            <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{{ url_for('login') }}" ><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Wrap header + section in one box -->
+<div class="unified-box container">
+    <header>
+        <h1>WELCOME TO AUSDAIS</h1>
+        <p>Solving real-world data challenges through innovation and analytics</p>
+    </header>
+
+    <section id="about">
+
+        <p>
+            With roots in both academia and research communities, AusDAIS has always been devoted to simplifying data,
+            sharing knowledge, and pursuing innovation. Founded in Australia, AusDAIS brings together data engineering,
+            science, and analytics to solve present and future challenges.
+        </p>
+        <p>
+            We are a Melbourne-based Data Analytics hub with a passion for innovation and solving complex real-world
+            data challenges. AusDAIS experts have accomplished various real-world data challenge projects. Our aim is
+            to prepare future talents and improve their skills for future industry challenges.
+        </p>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+
+</html>

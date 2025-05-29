@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Sets language to English -->
+<head>
+    <meta charset="UTF-8"> <!-- Character encoding for proper text display -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes page responsive on all devices -->
+    <title>AUSDIAS</title> <!-- Title shown in the browser tab -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            --secondary-bg:  #f3f4f6 ;
+            --accent-blue: #1e88e5;
+            --accent-purple: #a855f7;
+            --text-primary: #111827;
+            --text-secondary: #9ca3af;
+            --card-bg: rgba(39, 39, 42, 0.8);
+        --padding-bg: #ffffff ;  /* New light blue color for padding background */
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Apply the gradient animation to the background */
+            background: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+/* Navigation */
+nav {
+    padding: 1.2rem 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav .logo img {
+    width: 60px;
+    transition: 0.3s ease;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* For Firefox */
+    color: transparent; /* Fallback */
+    transform: translateY(-3px);
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    nav ul li a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+        display: block;
+        width: 100%;
+    }
+
+    nav .logo {
+        margin-bottom: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+}
+ .wrapper {
+            width: 420px;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: 100px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+ h1, h2, p {
+            margin: 0; /* Removes default margins */
+        }
+
+
+        /* General section styles */
+        section {
+            padding: 30px 30px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        section img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover; /* Maintains aspect ratio */
+            display: block;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-content {
+            text-align: center;
+        }
+
+        .text-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            color: #fff;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #003366;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+/* Shared container styles for all four sections */
+.aboutus,
+.chatbot,
+.contactus,
+.services {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin: 80px auto 0 auto; /* Center horizontally, with top margin */
+    padding: 40px;
+    max-width: 1100px;          /* Limit max width to 900px */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Text content styling */
+.aboutus .text-content,
+.chatbot .text-content,
+.contactus .text-content,
+.services .text-content {
+    flex: 1;
+    max-width: 60%;
+    text-align: justify;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    color: #333333;
+}
+
+/* Headings inside the text content */
+.aboutus .text-content h2,
+.chatbot .text-content h2,
+.contactus .text-content h2,
+.services .text-content h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #0077cc;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Paragraphs inside text content */
+.aboutus .text-content p,
+.chatbot .text-content p,
+.contactus .text-content p,
+.services .text-content p {
+    margin-bottom: 16px;
+    color: #555555;
+}
+
+/* Images styling */
+.aboutus img,
+.chatbot img,
+.contactus img,
+.services img {
+    width: 400px;      /* fixed width */
+    height: 250px;     /* fixed height */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+
+.aboutus img:hover,
+.chatbot img:hover,
+.contactus img:hover,
+.services img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+         /* Footer */
+footer {
+    color: #000;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+
+<body class="accent-blue">
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}"><i class="fas fa-robot"></i> Assistant</a></li>
+            <li><a href="{{ url_for('dashboard') }}" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{{ url_for('services') }}"><i class="fas fa-shield-alt"></i> Services</a></li>
+            <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{{ url_for('login') }}" ><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+    </div>
+</nav>
+</body>
+
+
+<!-- About Us Section -->
+<section class="aboutus">
+    <div class="text-content">
+        <p>Welcome to our website! We are a team dedicated to delivering top-notch services. Here’s a brief overview of what we do and why we’re the best at it.</p>
+        <a href="{{ url_for('aboutus') }}" class="btn" >About Us</a>
+    </div>
+    <img src="{{ url_for('static', filename='images/aboutus.jpg') }}" alt="About Us Image" loading="lazy">
+</section>
+
+<!-- Chatbot Feature Section -->
+<section class="chatbot">
+    <img src="{{ url_for('static', filename='images/chatbot.jpg') }}" alt="Chatbot Image" loading="lazy">
+    <div class="text-content">
+        <p>Our recently developed <span class="highlight">AI Chatbot</span> is designed to revolutionize the way you interact with technology. Get instant support, personalized answers, and a seamless customer experience like never before.</p>
+        <a href="{{ url_for('chatbot') }}" class="btn" >Chatbot</a>
+    </div>
+</section>
+
+<!-- Contact Us Section -->
+<section class="contactus">
+    <div class="text-content">
+        <p>We’re here to help. Get in touch through our contact form or visit us at our address listed below.</p>
+        <a href="{{ url_for('contactus') }}" class="btn" >Contact Us</a>
+    </div>
+    <img src="{{ url_for('static', filename='images/contactus.jpg') }}" alt="Contact Us Image" loading="lazy">
+</section>
+
+<!-- Services Section -->
+<section class="services">
+    <img src="{{ url_for('static', filename='images/services.jpg') }}" alt="Services Image" loading="lazy">
+    <div class="text-content">
+        <p>We offer a wide range of services to meet your business needs, including IT consulting, cybersecurity, and more. Explore our services to find the best solution for your business.</p>
+        <a href="{{ url_for('services') }}" class="btn" >Services</a>
+    </div>
+</section>
+
+
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; {{ current_year }} AusDAIS. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

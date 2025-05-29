@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phishing Detection Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+  <style>
+        :root {
+    --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);  /* pastel gradient background */
+    --secondary-bg: rgba(255, 255, 255, 0.8);                       /* semi-transparent white overlay */
+    --accent-blue: #1e88e5;                                          /* accent color blue */
+    --accent-green: #43a047;                                         /* accent color green */
+    --accent-orange: #fb8c00;                                        /* accent color orange */
+    --accent-purple: #9b51e0;                                        /* accent color purple */
+    --accent-red: #e53935;                                           /* accent color red */
+    --text-primary: #111827;                                         /* main text color */
+    --text-secondary: #4b5563;                                       /* secondary text color */
+    --card-bg: rgba(255, 255, 255, 0.9);                            /* card background */
+    --input-bg: rgba(243, 244, 246, 0.9);                           /* input background */
+    --button-hover: #ff4081;                                         /* button hover color */
+}
+
+* {
+    margin: 0;  /* reset default margin */
+    padding: 0; /* reset default padding */
+    box-sizing: border-box;  /* use border-box sizing */
+}
+
+body {
+    display: flex;                    /* flex container */
+    justify-content: center;          /* center horizontally */
+    align-items: center;              /* center vertically */
+    min-height: 100vh;                /* full viewport height */
+    background: var(--primary-bg);   /* apply gradient background */
+    background-size: 400% 400%;       /* scale background for animation */
+    animation: gradientShift 15s ease infinite;  /* animate gradient */
+    font-family: 'Inter', sans-serif; /* font family */
+    color: var(--text-primary);      /* text color */
+    overflow: hidden;                /* hide overflow */
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }    /* start position */
+    50% { background-position: 100% 50%; } /* middle position */
+    100% { background-position: 0% 50%; }  /* end position */
+}
+
+#sidebar-nav {
+    position: fixed;                  /* fixed position to stay on screen */
+    top: 0;                          /* align to top */
+    left: -250px;                   /* hide sidebar off-screen to left */
+    width: 240px;                   /* sidebar width */
+    height: 100vh;                  /* full viewport height */
+    backdrop-filter: blur(10px);    /* blur background behind sidebar */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow on right edge */
+    padding-top: 2rem;              /* spacing on top inside */
+    z-index: 1000;                  /* appear above other elements */
+    display: flex;                  /* flex container for vertical layout */
+    flex-direction: column;         /* stack children vertically */
+    align-items: center;            /* center children horizontally */
+    transition: left 0.3s ease;     /* smooth slide-in/out effect */
+}
+
+#sidebar-nav .logo img {
+    width: 80px;                    /* logo image size */
+    margin-bottom: 2rem;            /* space below logo */
+    transition: 0.3s ease;          /* smooth transition on style changes */
+}
+
+.nav-links {
+    list-style: none;               /* remove default bullets */
+    padding: 0;                    /* remove default padding */
+    width: 100%;                   /* full width */
+}
+
+.nav-links li {
+    width: 100%;                   /* full width list items */
+}
+
+.nav-links li a {
+    display: flex;                 /* flex layout for icon + text */
+    align-items: center;           /* vertically center content */
+    padding: 15px 20px;            /* spacing inside links */
+    color: var(--text-primary);    /* link text color */
+    text-decoration: none;         /* remove underline */
+    font-size: 16px;               /* font size */
+    transition: 0.3s ease;         /* smooth transition on hover */
+    border-left: 4px solid transparent;  /* invisible left border for spacing */
+    text-transform: uppercase;    /* uppercase text */
+}
+
+#sidebar-nav .nav-links li a:hover,
+#sidebar-nav .nav-links li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* gradient text on hover/active */
+    -webkit-background-clip: text;     /* clip background to text (webkit) */
+    -webkit-text-fill-color: transparent; /* make text fill transparent (webkit) */
+    background-clip: text;              /* clip background to text */
+    color: transparent;                 /* text color transparent for gradient effect */
+    transform: translateY(-3px);        /* lift text on hover */
+    font-weight: 600;                   /* bolder font on hover */
+}
+
+.nav-links li a {
+    padding-left: 39px;                 /* moves icon and text right */
+    display: flex;                     /* flex layout */
+    align-items: center;               /* vertically center */
+    gap: 10px;                        /* space between icon and text */
+}
+
+.wrapper {
+    width: 420px;                      /* container width */
+    background: var(--card-bg);        /* semi-transparent white background */
+    border-radius: 1rem;               /* rounded corners */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* subtle border */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1); /* soft shadow around box */
+    padding: 2.5rem;                   /* inner padding */
+    margin-top: 100px;                 /* space above container */
+    backdrop-filter: blur(10px);      /* blur background behind container */
+    animation: fadeIn 1.2s ease-out;  /* fade in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(50px); } /* start transparent and shifted down */
+    to { opacity: 1; transform: translateY(0); }      /* fade in and move to place */
+}
+
+//* When active (visible) */
+#sidebar-nav.active {
+    left: 0;                           /* Slide sidebar in from left (visible) */
+}
+
+/* Chat Area */
+#chat-container {
+    display: flex;                    /* Use flexbox for vertical layout */
+    flex-direction: column;           /* Stack chat elements vertically */
+    width: 100%;                     /* Full width */
+    height: 100vh;                   /* Full viewport height */
+    box-shadow: none;                /* No shadow */
+    overflow: hidden;                /* Hide overflow */
+    transition: margin-left 0.3s ease, width 0.3s ease; /* Smooth margin and width changes */
+}
+
+#chat-container.shifted {
+    margin-left: 250px;               /* Push content right by sidebar width */
+    width: calc(100% - 250px);       /* Shrink width to compensate for sidebar */
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 768px) {
+    #chat-container.shifted {
+        margin-left: 0;              /* No shift on small screens */
+        width: 100%;                 /* Full width */
+    }
+}
+
+#chat-header {
+    padding: 20px 0;                 /* Vertical padding */
+    font-size: 1.5em;                /* Larger font size */
+    font-weight: bold;               /* Bold text */
+    text-align: left;                /* Align text left */
+    padding-left: 40px;              /* Indent left padding */
+    text-transform: uppercase;       /* Uppercase text */
+    margin-top: 0px;                 /* Remove top margin */
+    margin: 0;                      /* Remove all margins */
+    letter-spacing: 1px;             /* Spacing between letters */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow below header */
+}
+
+.header-content {
+    display: flex;                   /* Flex container */
+    justify-content: center;         /* Center horizontally */
+    align-items: center;             /* Center vertically */
+    width: 100%;                    /* Full width */
+    gap: 20px;                      /* Space between children */
+    flex-wrap: wrap;                /* Wrap items on smaller screens */
+}
+
+.header-content span {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* Gradient text background */
+    -webkit-background-clip: text;  /* Clip background to text (webkit) */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent (webkit) */
+    background-clip: text;           /* Clip background to text for other browsers */
+    color: transparent;              /* Fallback transparent color */
+}
+
+.header-buttons {
+    display: flex;                  /* Flex container */
+    justify-content: flex-start;    /* Align left */
+    gap: 10px;                     /* Space between buttons */
+    margin-right: -80px;            /* Slight indent from right */
+}
+
+.category-btn {
+    padding: 10px 20px;             /* Padding inside button */
+    font-size: 14px;                /* Font size */
+    border: none;                  /* No border */
+    color: white;                  /* White text */
+    border-radius: 8px;             /* Rounded corners */
+    cursor: pointer;               /* Pointer cursor on hover */
+    display: inline-flex;          /* Inline flex for centering */
+    align-items: center;           /* Center items vertically */
+    justify-content: center;       /* Center items horizontally */
+    position: relative;            /* Position relative for internal positioning */
+    transition: transform 0.2s ease, background 0.3s ease; /* Smooth transform and background changes */
+}
+
+.category-btn i {
+    margin-right: 8px;             /* Space right of icon */
+}
+
+.url-btn, .email-btn, .image-btn {
+    background: linear-gradient(135deg, #5a7fd3, #6a5fd3) !important; /* Gradient background for category buttons */
+    color: white !important;       /* Force white text */
+    border: none !important;       /* Force no border */
+}
+
+.category-btn:hover {
+  transform: scale(1.1);               /* Slightly enlarge button on hover */
+}
+
+.url-btn:hover,
+.email-btn:hover,
+.image-btn:hover {
+  background: linear-gradient(135deg, #ffc2e0, #c7c2ff); /* Change background gradient on hover */
+}
+
+#chatbox {
+  flex-grow: 1;                       /* Grow to fill available vertical space */
+  padding: 30px 120px;                /* Padding inside chatbox */
+  overflow-y: auto;                   /* Enable vertical scroll */
+  display: flex;
+  flex-direction: column;             /* Stack messages vertically */
+  align-items: center;                /* Center messages horizontally */
+  background: transparent;
+  max-height: calc(100vh - 220px);   /* Limit height to viewport minus header/footer */
+}
+
+.message {
+  padding: 12px 16px;                 /* Padding inside message bubble */
+  margin: 10px 0;                    /* Vertical spacing between messages */
+  border-radius: 10px;                /* Rounded corners */
+  max-width: 80%;                    /* Max width of message */
+  width: auto;
+  word-break: break-word;            /* Break long words */
+  overflow-wrap: break-word;         /* Wrap overflowing text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transform & shadow */
+  position: relative;
+  background-color: #fff;            /* White background */
+  color: black;                     /* Black text */
+}
+
+.user-message {
+  align-self: flex-end;              /* Align user messages right */
+  border-bottom-right-radius: 4px;  /* Sharper corner on bottom-right */
+  background-color: #ffffff;         /* White background */
+}
+
+.bot-message {
+  align-self: flex-start;            /* Align bot messages left */
+  border-bottom-left-radius: 4px;   /* Sharper corner on bottom-left */
+  background-color: #ffffff;         /* White background */
+}
+
+.parent-container {
+  display: flex;
+  justify-content: center;           /* Center horizontally */
+  align-items: center;               /* Center vertically */
+  height: 100vh;                    /* Full viewport height */
+  width: 100%;
+}
+
+#input-container {
+  display: flex;
+  justify-content: center;           /* Center input and button horizontally */
+  align-items: center;               /* Center vertically */
+  gap: 12px;                        /* Space between input and button */
+  height: 80px;                     /* Container height */
+  width: 83%;                      /* Width relative to parent */
+  padding: 10px;
+  margin: 0 auto;                   /* Center container horizontally */
+  border: 1px solid #ccc;            /* Light border */
+  border-radius: 12px;               /* Rounded corners */
+  box-sizing: border-box;            /* Include padding/border in size */
+}
+
+#user-input {
+  width: 90%;                      /* Almost full container width */
+  height: 48px;
+  padding: 12px 20px;              /* Inner spacing */
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+  border-radius: 24px;             /* Pill-shaped input */
+  outline: none;
+  background: transparent;          /* Transparent background */
+  box-sizing: border-box;          /* Include padding/border in size */
+}
+
+#send-btn {
+  width: 90px;
+  height: 45px;
+  padding: 0;
+  border-radius: 24px;             /* Pill-shaped button */
+  background: linear-gradient(135deg, #5a7fd3, #6a5fd3); /* Gradient background */
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  transition: background-color 0.3s ease; /* Smooth hover background change */
+}
+
+#send-btn:hover {
+  background-color: #4a6bc7;       /* Darker background on hover */
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);  /* Light translucent border */
+  border-top: 4px solid #007bff;               /* Blue top border for spinner effect */
+  border-radius: 50%;                          /* Circular shape */
+  width: 24px;                                 /* Width */
+  height: 24px;                                /* Height */
+  animation: spin 1s linear infinite;          /* Continuous rotation animation */
+  margin-right: 10px;                          /* Spacing to the right */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }              /* Start rotation */
+  100% { transform: rotate(360deg); }           /* Complete full rotation */
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;                      /* Stack items vertically */
+    align-items: flex-start;                      /* Align left */
+    gap: 10px;                                   /* Smaller spacing */
+  }
+
+  .header-buttons {
+    justify-content: flex-start;                 /* Align buttons left */
+    width: 100%;                                 /* Full width */
+  }
+
+  .category-btn {
+    width: 100%;                                 /* Full width buttons */
+  }
+
+  .message {
+    max-width: 90%;                              /* Wider messages on small screens */
+  }
+}
+
+/* Hamburger menu icon styling */
+#hamburger {
+  position: fixed;                               /* Fixed position */
+  top: 20px;                                     /* Distance from top */
+  left: 20px;                                    /* Distance from left */
+  font-size: 1.5rem;                             /* Size */
+  color: #333;                                   /* Dark gray color */
+  cursor: pointer;                               /* Pointer cursor on hover */
+  z-index: 1100;                                 /* Above other elements */
+}
+  </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<aside id="sidebar-nav" class="hidden">
+    <div class="logo">
+        <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+    </div>
+    <ul class="nav-links">
+        <li><a href="{{ url_for('chatbot') }}" class="active"><i class="fas fa-robot"></i> Assistant</a></li>
+        <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="{{ url_for('services') }}"><i class="fas fa-shield-alt"></i> Services</a></li>
+        <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+    </ul>
+</aside>
+
+<!-- Hamburger Menu -->
+<div id="hamburger">
+    <i class="fas fa-bars"></i>
+</div>
+
+<div id="chat-container">
+  <!-- Header section with title and category buttons -->
+  <div id="chat-header">
+    <div class="header-content">
+      <span>Image Phishing Detection Chatbot</span> <!-- Chatbot title -->
+      <div class="header-buttons">
+        <!-- Category buttons to switch detection type -->
+        <button class="category-btn url-btn" data-category="URL" title="Check for phishing URLs">
+          <i class="fas fa-link"></i> URL
+        </button>
+        <button class="category-btn email-btn" data-category="Email" title="Check for phishing emails">
+          <i class="fas fa-envelope"></i> Email
+        </button>
+        <button class="category-btn image-btn" data-category="Image" title="Check for phishing images">
+          <i class="fas fa-image"></i> Image
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat messages container -->
+  <div id="chatbox"></div>
+
+  <!-- User input area with text input and send button -->
+  <div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button id="send-btn">Send</button>
+  </div>
+</div>
+
+<script>
+  // Add click listeners to category buttons to navigate to respective pages
+  document.querySelectorAll('.category-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const category = button.getAttribute('data-category');
+      if (category === 'URL') window.location.href = "/chatbot/url";        // Navigate to URL detection page
+      else if (category === 'Email') window.location.href = "/chatbot/email"; // Navigate to Email detection page
+      else if (category === 'Image') window.location.href = "/chatbot/image"; // Navigate to Image detection page
+    });
+  });
+
+  // Run after DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    const chatbox = document.getElementById('chatbox');           // Container for chat messages
+    const sendButton = document.getElementById('send-btn');       // Send button element
+    const userInput = document.getElementById('user-input');      // Text input element
+    let currentChat = [];                                         // Array to hold chat history (if needed)
+
+    // Hamburger menu toggles sidebar visibility and shifts chat container
+    document.getElementById('hamburger').addEventListener('click', function () {
+      const sidebar = document.getElementById('sidebar-nav');
+      const chatContainer = document.getElementById('chat-container');
+      sidebar.classList.toggle('active');       // Show/hide sidebar
+      chatContainer.classList.toggle('shifted'); // Shift chat area accordingly
+    });
+
+    // Function to add a chat message to the chatbox
+    function displayMessage(text, sender, bgColor = '') {
+      const messageDiv = document.createElement('div');
+      // Add message class and sender-specific class for styling
+      messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+      if (bgColor) messageDiv.style.backgroundColor = bgColor;
+
+      if (text === "Analyzing, please wait...") {
+        // If message is a loading message, show spinner icon with text
+        const spinner = document.createElement('div');
+        spinner.classList.add('spinner');       // Spinner CSS animation
+        messageDiv.appendChild(spinner);
+        messageDiv.appendChild(document.createTextNode(text));
+      } else {
+        // Otherwise, display the message text (can contain HTML)
+        messageDiv.innerHTML = text;
+      }
+
+      chatbox.appendChild(messageDiv);          // Add message div to chatbox
+      chatbox.scrollTop = chatbox.scrollHeight; // Auto scroll to latest message
+    }
+
+// Event listener for Send button click
+sendButton.addEventListener('click', function () {
+  const userMessage = userInput.value.trim(); // Get trimmed user input text
+
+  if (userMessage) {
+    // Display user message in chat
+    displayMessage(userMessage, 'user');
+    // Save user message to chat history
+    currentChat.push({ text: userMessage, sender: 'user' });
+
+    // Display loading message with spinner while backend processes
+    displayMessage("Analyzing, please wait...", 'bot');
+    currentChat.push({ text: "Analyzing, please wait...", sender: 'bot' });
+
+    // Simulate delay before sending to backend (for UX)
+    setTimeout(() => {
+      sendToBackend(userMessage); // Send the URL/message to backend API
+    }, 1000);
+
+    // Clear input box for new input
+    userInput.value = '';
+  }
+});
+
+// Allow sending message by pressing Enter key inside input field
+userInput.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') sendButton.click();
+});
+
+// Initial bot greeting message shown on page load
+displayMessage(
+  "Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.",
+  'bot'
+);
+currentChat.push({
+  text: "Welcome! Please enter a URL, and I’ll scan the images on the webpage for potential phishing threats.",
+  sender: 'bot'
+});
+
+// Function to send user message (URL) to backend for phishing image analysis
+function sendToBackend(userMessage) {
+  fetch("http://127.0.0.1:5000/analyze_url", {
+    method: "POST",                       // Use POST to send data
+    headers: {
+      "Content-Type": "application/json" // Indicate JSON data format
+    },
+    body: JSON.stringify({ "url": userMessage }) // Send URL in JSON body
+  })
+  .then(response => response.json())  // Parse JSON response
+  .then(data => {
+    // Remove the "Analyzing" spinner message after getting response
+    const botMessages = document.querySelectorAll('.bot-message');
+    const lastBotMessage = botMessages[botMessages.length - 1];
+    if (lastBotMessage && lastBotMessage.textContent.includes('Analyzing')) {
+      lastBotMessage.remove();
+    }
+
+    // If backend sends error, display it as a bot message
+    if (data.error) {
+      displayMessage(data.error, 'bot');
+      return;
+    }
+
+    const results = data.results;
+
+    // If no results found, inform the user
+    if (!results || results.length === 0) {
+      displayMessage("No images found or nothing suspicious detected.", 'bot');
+      return;
+    }
+
+    // Build a formatted HTML string for all image phishing results
+    let resultHTML = `<div style="display: flex; flex-direction: column; gap: 15px;">` +
+      results.map(result => {
+        // Set background and text colors based on result status color
+        const bgColor = result.color === "green" ? "#d4edda" : result.color === "red" ? "#f8d7da" : "#f8f9fa";
+        const textColor = result.color === "green" ? "#155724" : result.color === "red" ? "#721c24" : "#212529";
+
+        return `
+          <div style="padding: 10px; background-color: ${bgColor}; color: ${textColor}; border-radius: 8px; border: 1px solid ${textColor};">
+            <div><strong>🔗 Image URL:</strong> <a href="${result.image_url}" target="_blank" style="color: inherit; text-decoration: underline;">${result.image_url}</a></div>
+            <div><strong>📊 Malicious Probability:</strong> ${result.malicious_probability}</div>
+            <div><strong>Status:</strong> ${result.safety_status}</div>
+          </div>
+        `;
+      }).join('') +
+    `</div>`;
+
+    // Display the formatted phishing analysis results as bot message
+    displayMessage(resultHTML, 'bot');
+  })
+  .catch(error => {
+    // On fetch or processing error, log error and notify user
+    console.error("Error:", error);
+    displayMessage("An error occurred while analyzing the URL. Please try again later.", 'bot');
+  });
+}
+});
+</script>
+</body>
+</html>

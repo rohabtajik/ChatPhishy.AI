@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phishing Detection Chatbot</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --primary-bg:       linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);  /* Gradient background */
+      --secondary-bg:     rgba(255, 255, 255, 0.8);                          /* Semi-transparent white */
+      --accent-blue:      #1e88e5;                                           /* Blue accent */
+      --accent-green:     #43a047;                                           /* Green accent */
+      --accent-orange:    #fb8c00;                                           /* Orange accent */
+      --accent-purple:    #9b51e0;                                           /* Purple accent */
+      --accent-red:       #e53935;                                           /* Red accent */
+      --text-primary:     #111827;                                           /* Dark primary text */
+      --text-secondary:   #4b5563;                                           /* Gray secondary text */
+      --card-bg:          rgba(255, 255, 255, 0.9);                          /* Card background */
+      --input-bg:         rgba(243, 244, 246, 0.9);                          /* Input background */
+      --button-hover:     #ff4081;                                           /* Hover color for buttons */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;        /* Reset and box-sizing */
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;                                                        /* Center content */
+      min-height: 100vh;                                                         /* Full viewport height */
+      background: var(--primary-bg);                                             /* Use gradient background */
+      background-size: 400% 400%;                                                /* Larger background for animation */
+      animation: gradientShift 15s ease infinite;                               /* Animate background */
+      font-family: 'Inter', sans-serif;                                         /* Font style */
+      color: var(--text-primary);                                                /* Text color */
+      overflow: hidden;                                                          /* Hide scrollbars */
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }    /* Start left */
+      50%  { background-position: 100% 50%; }  /* Shift right */
+      100% { background-position: 0% 50%; }    /* Return left */
+    }
+
+    #sidebar-nav {
+    position: fixed;                                     /* Sidebar stays fixed on screen */
+    top: 0;                                               /* Align to top */
+    left: -250px;                                         /* Hidden off-screen to the left */
+    width: 240px;                                         /* Sidebar width */
+    height: 100vh;                                        /* Full viewport height */
+    backdrop-filter: blur(10px);                         /* Blurred glass effect */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);           /* Light right-side shadow */
+    padding-top: 2rem;                                    /* Top padding */
+    z-index: 1000;                                        /* On top of other elements */
+    display: flex;                                        /* Flexbox layout */
+    flex-direction: column;                              /* Stack items vertically */
+    align-items: center;                                 /* Center items horizontally */
+    transition: left 0.3s ease;                           /* Smooth slide-in animation */
+}
+
+#sidebar-nav .logo img {
+    width: 80px;                                          /* Logo width */
+    margin-bottom: 2rem;                                  /* Space below logo */
+    transition: 0.3s ease;                                /* Smooth transition */
+}
+
+.nav-links {
+    list-style: none;                                     /* Remove bullet points */
+    padding: 0;                                           /* Remove padding */
+    width: 100%;                                          /* Full width of sidebar */
+}
+
+.nav-links li {
+    width: 100%;                                          /* Each list item takes full width */
+}
+
+.nav-links li a {
+    display: flex;                                        /* Flex layout for icon + text */
+    align-items: center;                                  /* Center items vertically */
+    padding: 15px 20px;                                   /* Inner spacing */
+    color: var(--text-primary);                          /* Text color */
+    text-decoration: none;                                /* Remove underline */
+    font-size: 16px;                                      /* Text size */
+    transition: 0.3s ease;                                /* Smooth hover transition */
+    border-left: 4px solid transparent;                  /* Placeholder border for active */
+    text-transform: uppercase;                            /* Make text uppercase */
+}
+
+#sidebar-nav .nav-links li a:hover,
+#sidebar-nav .nav-links li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));  /* Gradient text */
+    -webkit-background-clip: text;                      /* Clip gradient to text (Safari/Chrome) */
+    -webkit-text-fill-color: transparent;               /* Make text color transparent (Safari/Chrome) */
+    background-clip: text;                              /* Clip gradient to text */
+    color: transparent;                                 /* Hide original color */
+    transform: translateY(-3px);                        /* Move link up slightly */
+    font-weight: 600;                                   /* Bold font on hover/active */
+}
+
+.nav-links li a {
+    padding-left: 39px;                                  /* Indent link content */
+    display: flex;                                       /* Flex layout */
+    align-items: center;                                 /* Center vertically */
+    gap: 10px;                                           /* Space between icon and text */
+}
+
+.wrapper {
+    width: 420px;                                        /* Container width */
+    background: var(--card-bg);                         /* Background color */
+    border-radius: 1rem;                                /* Rounded corners */
+    border: 1px solid rgba(0, 0, 0, 0.1);                /* Light border */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);           /* Subtle shadow */
+    padding: 2.5rem;                                     /* Inner spacing */
+    margin-top: 100px;                                   /* Space from top */
+    backdrop-filter: blur(10px);                        /* Blur effect */
+    animation: fadeIn 1.2s ease-out;                     /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(50px); }   /* Start hidden and moved down */
+    to { opacity: 1; transform: translateY(0); }        /* End fully visible and in place */
+}
+
+
+#sidebar-nav.active {
+    left: 0;                                             /* Slide sidebar into view */
+}
+
+/* Chat Area */
+#chat-container {
+    display: flex;                                       /* Flex layout for children */
+    flex-direction: column;                              /* Stack items vertically */
+    width: 100%;                                         /* Full width */
+    height: 100vh;                                       /* Full viewport height */
+    box-shadow: none;                                    /* No shadow */
+    overflow: hidden;                                    /* Hide scrollbars */
+    transition: margin-left 0.3s ease, width 0.3s ease;  /* Animate sidebar slide */
+}
+
+#chat-container.shifted {
+    margin-left: 250px;                                  /* Push chat when sidebar opens */
+    width: calc(100% - 250px);                           /* Reduce width accordingly */
+}
+
+/* Adjust chat container on smaller screens */
+@media (max-width: 768px) {
+    #chat-container.shifted {
+        margin-left: 0;                                  /* No shift on small screens */
+        width: 100%;                                     /* Use full width */
+    }
+}
+
+#chat-header {
+    padding: 20px 0;                                     /* Vertical spacing */
+    font-size: 1.5em;                                    /* Large font size */
+    font-weight: bold;                                   /* Bold text */
+    text-align: left;                                    /* Align text left */
+    padding-left: 40px;                                  /* Left spacing */
+    text-transform: uppercase;                           /* All caps */
+    margin-top: 0px;                                     /* No top margin */
+    margin: 0;                                           /* Reset margin */
+    letter-spacing: 1px;                                 /* Space between letters */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);            /* Subtle bottom shadow */
+}
+
+.header-content {
+    display: flex;                                       /* Flex layout */
+    justify-content: center;                             /* Center horizontally */
+    align-items: center;                                 /* Center vertically */
+    width: 100%;                                         /* Full width */
+    gap: 20px;                                           /* Space between elements */
+    flex-wrap: wrap;                                     /* Wrap items on small screens */
+}
+
+.header-content span {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));  /* Gradient text */
+    -webkit-background-clip: text;                      /* Clip gradient for Chrome/Safari */
+    -webkit-text-fill-color: transparent;               /* Transparent text for gradient */
+    background-clip: text;                              /* Clip gradient for other browsers */
+    color: transparent;                                 /* Fallback color */
+}
+
+
+.header-buttons {
+  display: flex;                                        /* Use flex layout */
+  justify-content: flex-start;                         /* Align buttons to the left */
+  gap: 10px;                                            /* Space between buttons */
+  margin-right: -80px;                                  /* Slight left indent (optional) */
+}
+
+.category-btn {
+  padding: 10px 20px;                                   /* Button inner spacing */
+  font-size: 14px;                                      /* Text size */
+  border: none;                                         /* Remove border */
+  color: white;                                         /* Text color */
+  border-radius: 8px;                                   /* Rounded corners */
+  cursor: pointer;                                      /* Pointer on hover */
+  display: inline-flex;                                 /* Flex layout inline */
+  align-items: center;                                  /* Center vertically */
+  justify-content: center;                              /* Center horizontally */
+  position: relative;                                   /* For potential positioning */
+  transition: transform 0.2s ease, background 0.3s ease;/* Smooth hover animations */
+}
+
+.category-btn i {
+  margin-right: 8px;                                    /* Space between icon and text */
+}
+
+.url-btn, .email-btn, .image-btn {
+  background: linear-gradient(135deg, #5a7fd3, #6a5fd3) !important;  /* Gradient background */
+  color: white !important;                              /* Ensure white text */
+  border: none !important;                              /* Remove border */
+}
+
+.category-btn:hover {
+  transform: scale(1.1);                                /* Slight zoom on hover */
+}
+
+.url-btn:hover {
+  background: linear-gradient(135deg, #ffc2e0, #c7c2ff); /* Pink-purple on hover */
+}
+
+.email-btn:hover {
+  background: linear-gradient(135deg, #ffc2e0, #c7c2ff); /* Same hover as URL */
+}
+
+.image-btn:hover {
+  background: linear-gradient(135deg, #ffc2e0, #c7c2ff); /* Same hover as URL */
+}
+
+#chatbox {
+  flex-grow: 1;                                         /* Expand to fill available space */
+  padding: 30px 120px;                                  /* Inner spacing */
+  overflow-y: auto;                                     /* Scroll if content overflows */
+  display: flex;                                        /* Flex layout */
+  flex-direction: column;                               /* Stack messages vertically */
+  align-items: center;                                  /* Center messages horizontally */
+  background: transparent;                              /* Transparent background */
+  max-height: calc(100vh - 220px);                      /* Limit max height */
+}
+.message {
+  padding: 12px 16px;                                      /* Inner spacing for message bubble */
+  margin: 10px 0;                                          /* Vertical spacing between messages */
+  border-radius: 10px;                                     /* Rounded corners */
+  max-width: 80%;                                          /* Limit width of message */
+  width: auto;                                             /* Width adjusts based on content */
+  word-break: break-word;                                  /* Break long words to wrap */
+  overflow-wrap: break-word;                               /* Prevent overflow issues */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);                 /* Subtle shadow */
+  display: inline-block;                                   /* Align as inline block */
+  font-size: 1.15rem;                                      /* Font size */
+  line-height: 1.4;                                        /* Line spacing */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;   /* Smooth effects on hover/change */
+  position: relative;                                      /* For future positioning needs */
+  background-color: #fff;                                  /* White background */
+  color: black;                                            /* Black text color */
+}
+
+.user-message {
+  align-self: flex-end;                                    /* Align user messages to right */
+  border-bottom-right-radius: 4px;                         /* Slightly sharp right-bottom corner */
+  background-color: #ffffff;                               /* White background */
+}
+
+.bot-message {
+  align-self: flex-start;                                  /* Align bot messages to left */
+  border-bottom-left-radius: 4px;                          /* Slightly sharp left-bottom corner */
+  background-color: #ffffff;                               /* White background */
+}
+
+.parent-container {
+  display: flex;                                           /* Flexbox layout */
+  justify-content: center;                                /* Center items horizontally */
+  align-items: center;                                     /* Center items vertically */
+  height: 100vh;                                           /* Full viewport height */
+  width: 100%;                                             /* Full width */
+}
+
+#input-container {
+  display: flex;                                           /* Flexbox for input area */
+  justify-content: center;                                /* Center input and button */
+  align-items: center;                                     /* Center vertically */
+  gap: 12px;                                               /* Space between input and button */
+  height: 80px;                                            /* Container height */
+  width: 83%;                                              /* Container width */
+  padding: 10px;                                           /* Inner spacing */
+  margin: 0 auto;                                          /* Center container horizontally */
+  border: 1px solid #ccc;                                  /* Light gray border */
+  border-radius: 12px;                                     /* Rounded corners */
+  box-sizing: border-box;                                  /* Include padding in size */
+}
+
+#user-input {
+  width: 90%;                                              /* Input field width */
+  height: 48px;                                            /* Input height */
+  padding: 12px 20px;                                      /* Inner spacing */
+  font-size: 1.1rem;                                       /* Input text size */
+  border: 1px solid #ccc;                                  /* Light gray border */
+  border-radius: 24px;                                     /* Pill-shaped input */
+  outline: none;                                           /* Remove blue outline */
+  background: transparent;                                 /* Transparent background */
+  box-sizing: border-box;                                  /* Include padding/border in size */
+}
+
+#send-btn {
+  width: 90px;                                             /* Button width */
+  height: 45px;                                            /* Button height */
+  padding: 0;                                              /* Remove inner spacing */
+  border-radius: 24px;                                     /* Rounded (pill shape) */
+  background: linear-gradient(135deg, #5a7fd3, #6a5fd3);   /* Gradient background */
+  border: none;                                            /* No border */
+  cursor: pointer;                                         /* Cursor becomes pointer on hover */
+  color: white;                                            /* White text */
+  font-weight: 600;                                        /* Bold text */
+  font-size: 18px;                                         /* Font size */
+  transition: background-color 0.3s ease;                  /* Smooth hover transition */
+}
+
+#send-btn:hover {
+  background-color: #4a6bc7;                               /* Darker color on hover */
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);              /* Light transparent border */
+  border-top: 4px solid #007bff;                           /* Blue top border for spinning effect */
+  border-radius: 50%;                                     /* Make it circular */
+  width: 24px;                                             /* Width of spinner */
+  height: 24px;                                            /* Height of spinner */
+  animation: spin 1s linear infinite;                      /* Continuous rotation */
+  margin-right: 10px;                                      /* Space to the right */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }                          /* Start at 0 degrees */
+  100% { transform: rotate(360deg); }                      /* Full rotation */
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;                                /* Stack items vertically */
+    align-items: flex-start;                               /* Align to the left */
+    gap: 10px;                                             /* Space between items */
+  }
+
+  .header-buttons {
+    justify-content: flex-start;                           /* Align buttons to the left */
+    width: 100%;                                           /* Full width */
+  }
+
+  .category-btn {
+    width: 100%;                                           /* Full width for buttons */
+  }
+
+  .message {
+    max-width: 90%;                                        /* Slightly wider on small screens */
+  }
+}
+
+/* Hamburger style */
+#hamburger {
+  position: fixed;                                         /* Fixed position on screen */
+  top: 20px;                                               /* 20px from top */
+  left: 20px;                                              /* 20px from left */
+  font-size: 1.5rem;                                       /* Icon size */
+  color: #333;                                             /* Dark gray color */
+  cursor: pointer;                                         /* Pointer on hover */
+  z-index: 1100;                                           /* Appear above sidebar */
+}
+  </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<aside id="sidebar-nav" class="hidden">                     <!-- Sidebar initially hidden -->
+    <div class="logo">                                      <!-- Logo container -->
+        <img src="../static/images/logo.png" alt="AUSDIAS Logo">  <!-- AUSDIAS logo -->
+    </div>
+    <ul class="nav-links">                                  <!-- Sidebar navigation links -->
+        <li><a href="{{ url_for('chatbot') }}" class="active"><i class="fas fa-robot"></i> Assistant</a></li>
+        <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="{{ url_for('services') }}"><i class="fas fa-shield-alt"></i> Services</a></li>
+        <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+    </ul>
+</aside>
+
+<!-- Hamburger Menu -->
+<div id="hamburger">                                       <!-- Icon to toggle sidebar -->
+    <i class="fas fa-bars"></i>                             <!-- Font Awesome hamburger icon -->
+</div>
+
+<!-- Chat Container -->
+<div id="chat-container">                                  <!-- Whole chat area -->
+
+  <!-- Chat Header -->
+  <div id="chat-header">
+    <div class="header-content">                           <!-- Centered heading and buttons -->
+      <span>Email Phishing Detection Chatbot</span>        <!-- Title text -->
+
+      <div class="header-buttons">                         <!-- Buttons to choose phishing type -->
+        <button class="category-btn url-btn" data-category="URL" title="Check for phishing URLs">
+          <i class="fas fa-link"></i> URL
+        </button>
+
+        <button class="category-btn email-btn" data-category="Email" title="Check for phishing emails">
+          <i class="fas fa-envelope"></i> Email
+        </button>
+
+        <button class="category-btn image-btn" data-category="Image" title="Check for phishing images">
+          <i class="fas fa-image"></i> Image
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Messages Area -->
+  <div id="chatbox"></div>                                 <!-- Area where messages appear -->
+
+  <!-- Input Section -->
+  <div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your message..." />  <!-- Text input -->
+    <button id="send-btn">Send</button>                   <!-- Send button -->
+  </div>
+</div>
+
+<script>
+   // Add event listeners to each category button (URL, Email, Image)
+document.querySelectorAll('.category-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const category = button.getAttribute('data-category');
+    // Redirect to corresponding chatbot page based on selected category
+    if (category === 'URL') window.location.href = "/chatbot/url";
+    else if (category === 'Email') window.location.href = "/chatbot/email";
+    else if (category === 'Image') window.location.href = "/chatbot/image";
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Get DOM elements for chatbox, send button, and user input field
+  const chatbox = document.getElementById('chatbox');
+  const sendButton = document.getElementById('send-btn');
+  const userInput = document.getElementById('user-input');
+  let currentChat = []; // Store chat history
+
+  // Toggle sidebar visibility when hamburger icon is clicked
+  document.getElementById('hamburger').addEventListener('click', function () {
+    const sidebar = document.getElementById('sidebar-nav');
+    const chatContainer = document.getElementById('chat-container');
+    sidebar.classList.toggle('active'); // Show/hide sidebar
+    chatContainer.classList.toggle('shifted'); // Shift chat container to accommodate sidebar
+  });
+
+  // Function to display messages in the chatbox
+  function displayMessage(text, sender, bgColor = '') {
+    const messageDiv = document.createElement('div');
+    // Add CSS class based on sender type (user or bot)
+    messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+    if (bgColor) messageDiv.style.backgroundColor = bgColor;
+
+    // If bot is processing, show spinner and message
+    if (text === "Analyzing, please wait...") {
+      const spinner = document.createElement('div');
+      spinner.classList.add('spinner');
+      messageDiv.appendChild(spinner);
+      messageDiv.appendChild(document.createTextNode(text));
+    } else {
+      messageDiv.innerHTML = text; // Otherwise, show normal text
+    }
+
+    chatbox.appendChild(messageDiv);
+    chatbox.scrollTop = chatbox.scrollHeight; // Scroll to latest message
+  }
+
+  // When send button is clicked
+  sendButton.addEventListener('click', function () {
+    const userMessage = userInput.value.trim(); // Get and trim user input
+    if (userMessage) {
+      displayMessage(userMessage, 'user'); // Show user's message
+      currentChat.push({ text: userMessage, sender: 'user' }); // Save to chat history
+      displayMessage("Analyzing, please wait...", 'bot'); // Show bot is analyzing
+      currentChat.push({ text: "Analyzing, please wait...", sender: 'bot' });
+
+      setTimeout(() => {
+        sendToBackend(userMessage); // Send user input to backend
+      }, 1000);
+
+      userInput.value = ''; // Clear input box
+    }
+  });
+
+  // Allow sending message by pressing Enter key
+  userInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') sendButton.click();
+  });
+
+  // Initial bot message shown when the page loads
+  displayMessage("Please enter the email content you'd like us to check for phishing threats.", 'bot');
+
+  // Function to send user message to backend and process response
+  function sendToBackend(userMessage) {
+    fetch("http://127.0.0.1:5000/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ 'message': userMessage }) // Send input as form data
+    })
+      .then(response => response.json()) // Convert response to JSON
+      .then(data => {
+        console.log("Backend response:", data); // Debug log
+
+        const botMessages = document.querySelectorAll('.bot-message');
+        const lastBotMessage = botMessages[botMessages.length - 1];
+
+        // Display phishing probability if available
+        const phishingProb = data.probability !== undefined
+          ? `📊 Phishing Probability: ${data.probability}%`
+          : "";
+
+        // Construct bot response based on prediction
+        const finalMessage = data.prediction.toLowerCase().includes("phishing")
+          ? `
+            <div style="color: #b30000; font-weight: 500;">
+              ⚠️ <strong>Heads Up:</strong> This email looks suspicious.<br>
+              🚫 It might be a phishing attempt trying to trick you.<br><br>
+              ${phishingProb}
+            </div>
+          `
+          : `
+            <div style="color: #006400; font-weight: 500;">
+              ✅ <strong>All Good:</strong> This email looks safe and clean.<br>
+              📬 No suspicious activity was detected.<br><br>
+              ${phishingProb}
+            </div>
+          `;
+
+        // Replace the analyzing message with the final result
+        if (lastBotMessage && lastBotMessage.textContent.includes('Analyzing')) {
+          lastBotMessage.innerHTML = finalMessage;
+          if (data.color) lastBotMessage.style.backgroundColor = data.color;
+          currentChat[currentChat.length - 1].text = finalMessage; // Update chat history
+        } else {
+          // If no analyzing message exists, create a new message div
+          const resultMessage = document.createElement('div');
+          resultMessage.className = "message bot-message";
+          resultMessage.innerHTML = finalMessage;
+          if (data.color) resultMessage.style.backgroundColor = data.color;
+          chatbox.appendChild(resultMessage);
+          chatbox.scrollTop = chatbox.scrollHeight;
+          currentChat.push({ text: finalMessage, sender: 'bot' });
+        }
+      })
+      .catch(error => {
+        // Handle request failure
+        console.error('Error sending request to backend:', error);
+        const errorMsg = "❌ Oops! Something went wrong while analyzing the email.";
+
+        const botMessages = document.querySelectorAll('.bot-message');
+        const lastBotMessage = botMessages[botMessages.length - 1];
+        // Show error message if "Analyzing" was shown
+        if (lastBotMessage && lastBotMessage.textContent.includes('Analyzing')) {
+          lastBotMessage.textContent = errorMsg;
+          currentChat[currentChat.length - 1].text = errorMsg;
+        }
+      });
+  }
+});
+</script>
+</body>
+</html>

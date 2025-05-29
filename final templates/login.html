@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);
+            --secondary-bg: rgba(255, 255, 255, 0.8);
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-orange: #fb8c00;
+            --accent-purple: #9b51e0;
+            --accent-red: #e53935;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: rgba(243, 244, 246, 0.9);
+            --button-hover: #ff4081;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--primary-bg);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+
+/* Navigation */
+nav {
+    padding: 1.2rem 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav .logo img {
+    width: 60px;
+    transition: 0.3s ease;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* For Firefox */
+    color: transparent; /* Fallback */
+    transform: translateY(-3px);
+    font-weight: 600;
+}
+
+
+
+
+        .wrapper {
+            width: 420px;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: 100px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+       .form-box h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* updated line */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+
+
+        .input-box {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--input-bg);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(45, 156, 219, 0.3);
+            outline: none;
+        }
+
+        .input-box .icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-blue);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .remember-forgot a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            color: var(--button-hover);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-blue);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .login-register {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .login-register a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-register a:hover {
+            color: var(--button-hover);
+        }
+
+@media (max-width: 600px) {
+    nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    nav ul li a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+        display: block;
+        width: 100%;
+    }
+
+    nav .logo {
+        margin-bottom: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .message {
+        width: 100%;
+        max-width: 100%;
+    }
+
+     #chat-container {
+        margin-top: 120px; /* more space on mobile for fixed nav */
+        padding: 0 1rem;
+    }
+
+    #user-input, #send-btn {
+        width: 100%;
+    }
+
+    .input-wrapper {
+        padding: 0.75rem 1rem;
+    }
+
+    .category-btn {
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .welcome-message h2 {
+        font-size: 1.5rem;
+    }
+
+    .welcome-message p {
+        font-size: 0.9rem;
+    }
+
+    .category-btn i {
+        font-size: 1.2rem;
+    }
+
+    #send-btn {
+        justify-content: center;
+    }
+}
+
+
+
+
+
+    </style>
+</head>
+<body class="accent-blue">
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('chatbot') }}"><i class="fas fa-robot"></i> Assistant</a></li>
+            <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('aboutus') }}"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{{ url_for('services') }}"><i class="fas fa-shield-alt"></i> Services</a></li>
+            <li><a href="{{ url_for('contactus') }}"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{{ url_for('login') }}" class="active"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email" required>
+                <span class="icon"><i class="fas fa-envelope"></i></span>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+                <span class="icon"><i class="fas fa-lock"></i></span>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="login-register">
+                <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

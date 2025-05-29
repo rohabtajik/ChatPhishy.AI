@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive for mobile -->
+    <title>Phishing Detection Assistant</title> <!-- Browser tab title -->
+
+    <!-- Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Import Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+    /* Define custom CSS variables for colors and backgrounds used throughout the site */
+    --primary-bg: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa);/* Main gradient background */
+    --secondary-bg: rgba(255, 255, 255, 0.8);                        /* Semi-transparent white for overlays */
+    --accent-blue: #1e88e5;                                          /* Blue accent color */
+    --accent-green: #43a047;                                         /* Green accent color */
+    --accent-orange: #fb8c00;                                        /* Orange accent color */
+    --accent-purple: #9b51e0;                                       /* Purple accent color */
+    --accent-red: #e53935;                                          /* Red accent color */
+    --text-primary: #111827;                                        /* Primary text color (dark gray/black) */
+    --text-secondary: #4b5563;                                      /* Secondary text color (medium gray) */
+    --card-bg: rgba(255, 255, 255, 0.9);                            /* Background for cards with slight transparency */
+    --input-bg: rgba(243, 244, 246, 0.9);                           /* Background for inputs with slight transparency */
+    --button-hover: #ff4081;                                        /* Hover color for buttons */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;                 /* Use flexbox to center content horizontally and vertically */
+    min-height: 100vh;                   /* Take at least full viewport height */
+    background: var(--primary-bg);       /* Set the background to the defined gradient */
+    background-size: 400% 400%;          /* The background size is larger than the viewport to enable smooth shifting */
+    animation: gradientShift 15s ease infinite; /* Animate the background gradient to create a subtle shifting effect */
+    font-family: 'Inter', sans-serif;     /* Use the Inter font loaded from Google Fonts */
+    color: var(--text-primary);            /* Primary text color */
+    overflow-x: hidden;                    /* Prevent horizontal scroll bars on small screens */
+}
+
+/* Keyframes for the background gradient animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%; /* Start position of the gradient */
+    }
+    50% {
+        background-position: 100% 50%; /* Middle position (shifted horizontally) */
+    }
+    100% {
+        background-position: 0% 50%; /* Back to the start position */
+    }
+}
+
+/* Navigation bar styling */
+nav {
+    padding: 1.2rem 3rem;               /* Space inside nav on top/bottom and left/right */
+    position: fixed;                   /* Fix nav at the top of the viewport */
+    top: 0;                           /* Align to top */
+    left: 0;                          /* Align to left */
+    width: 100%;                      /* Full width */
+    background: var(--nav-bg);        /* Background color, defined as a CSS variable elsewhere */
+    backdrop-filter: blur(10px);      /* Blur effect behind nav for frosted glass look */
+    z-index: 1000;                    /* Ensure nav stays above most other elements */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    transition: all 0.3s ease;        /* Smooth transitions for changes (like background or shadow) */
+}
+
+/* Container inside nav to hold content like logo and menu */
+nav .container {
+    display: flex;                    /* Use flexbox for layout */
+    justify-content: space-between;  /* Push items to edges (logo left, menu right) */
+    align-items: center;              /* Vertically center items */
+    max-width: 1200px;                /* Limit max width */
+    margin: 0 auto;                   /* Center horizontally */
+}
+
+/* Logo image inside nav */
+nav .logo img {
+    width: 60px;                     /* Fixed width for logo */
+    transition: 0.3s ease;           /* Smooth effect if size or other properties change */
+}
+
+/* Navigation menu list */
+nav ul {
+    display: flex;                   /* Horizontal layout of nav items */
+    gap: 2rem;                      /* Space between each menu item */
+    list-style: none;                /* Remove bullet points */
+    margin: 0;                      /* Remove default margin */
+    padding: 0;                     /* Remove default padding */
+}
+
+/* Navigation menu links */
+nav ul li a {
+    color: var(--text-primary);      /* Use main text color */
+    text-decoration: none;           /* Remove underline */
+    font-size: 1rem;                 /* Set font size */
+    text-transform: uppercase;       /* Uppercase text */
+    font-weight: 500;                /* Medium weight */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth color and movement transitions */
+}
+
+/* Hover and active link styles */
+nav ul li a:hover,
+nav ul li a.active {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* Gradient text */
+    -webkit-background-clip: text;     /* Clip background to text (Safari, Chrome) */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent to show gradient */
+    background-clip: text;              /* Firefox support */
+    color: transparent;                 /* Fallback color */
+    transform: translateY(-3px);        /* Slightly move link upwards on hover/active */
+    font-weight: 600;                   /* Slightly bolder font */
+}
+
+/* Wrapper box (likely for the chat or main content area) */
+.wrapper {
+    width: 420px;                      /* Fixed width */
+    background: var(--card-bg);       /* Card background with slight transparency */
+    border-radius: 1rem;              /* Rounded corners */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Light border */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 2.5rem;                  /* Inner spacing */
+    margin-top: 100px;                /* Space from top (e.g. below nav) */
+    backdrop-filter: blur(10px);      /* Blur background behind wrapper */
+    animation: fadeIn 1.2s ease-out; /* Fade-in animation on load */
+}
+
+/* Fade-in keyframe animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px); /* Start slightly down and invisible */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* End at normal position fully visible */
+    }
+}
+
+/* Chat container styling */
+#chat-container {
+    flex: 1;                         /* Flexible to fill available space */
+    max-width: 1400px;               /* Max width */
+    margin-top: 70px;                /* Space from top */
+    width: 100%;                    /* Full width inside parent */
+    box-sizing: border-box;          /* Include padding in width */
+    padding: 0 2rem;                 /* Horizontal padding */
+}
+
+       #chatbox {
+    flex: 1;                         /* Takes up all available space in its flex container */
+    overflow-y: auto;               /* Enables vertical scrollbar when content overflows */
+    padding: 2rem 0;                /* Vertical padding on top and bottom */
+    display: flex;                  /* Uses flexbox for layout */
+    flex-direction: column;         /* Arrange messages vertically */
+    gap: 1.5rem;                   /* Space between each message */
+}
+
+.message {
+    max-width: 75%;                 /* Messages take up at most 75% of the container width */
+    padding: 1.25rem 2rem;          /* Inner spacing in the message bubble */
+    border-radius: 1.5rem;          /* Rounded corners for chat bubble */
+    line-height: 1.6;               /* Spacing between lines of text */
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth fade-in animation */
+    position: relative;             /* For potential absolute-positioned children or effects */
+    backdrop-filter: blur(8px);     /* Slight blur behind the message for a glassy effect */
+}
+
+/* User messages styling */
+.user-message {
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%); /* Gradient bubble */
+    color: white;                  /* White text for contrast */
+    align-self: flex-end;          /* Align user messages to the right */
+    box-shadow: 0 4px 24px rgba(45, 212, 191, 0.2); /* Soft turquoise shadow */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Slight transparent border */
+}
+
+/* Bot messages styling */
+.bot-message {
+    background: var(--card-bg);    /* Light translucent background */
+    color: var(--text-primary);    /* Dark text color */
+    align-self: flex-start;        /* Align bot messages to the left */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Similar light border */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);  /* Slightly stronger shadow */
+}
+
+/* Container for the input area below chat */
+#input-container {
+    position: relative;            /* For positioning any absolute elements inside */
+    padding: 2rem 0;               /* Vertical padding */
+    background: transparent;       /* No background color */
+}
+
+/* Wrapper around input and send button */
+.input-wrapper {
+    display: flex;                 /* Arrange input and button horizontally */
+    gap: 1rem;                    /* Space between input and button */
+    align-items: center;           /* Vertically center items */
+    background: var(--input-bg);   /* Light background for input area */
+    border-radius: 1.25rem;        /* Rounded corners */
+    padding: 1rem 1.5rem;          /* Inner padding */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border */
+    transition: all 0.3s ease;     /* Smooth transition on focus */
+}
+
+/* When input or button inside wrapper is focused */
+.input-wrapper:focus-within {
+    border-color: var(--accent-blue); /* Change border color */
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2); /* Glow effect */
+}
+
+/* Text input field */
+#user-input {
+    flex: 1;                      /* Take up all space except button */
+    border: none;                 /* No border */
+    background: transparent;      /* Transparent background */
+    font-size: 1rem;              /* Normal text size */
+    color: var(--text-primary);   /* Main text color */
+    padding: 0.5rem;              /* Inner spacing */
+    outline: none;                /* Remove default focus outline */
+}
+
+/* Send button */
+#send-btn {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* Gradient background */
+    color: white;                /* White text */
+    border: none;                /* No border */
+    border-radius: 0.75rem;     /* Rounded corners */
+    padding: 0.75rem 1.5rem;    /* Button size */
+    cursor: pointer;            /* Pointer cursor on hover */
+    transition: all 0.3s ease;  /* Smooth hover transition */
+    display: flex;              /* Flex for icon + text */
+    align-items: center;        /* Vertically center contents */
+    gap: 0.5rem;                /* Space between icon and text */
+    font-weight: 500;           /* Medium font weight */
+}
+
+/* Send button hover effect */
+#send-btn:hover {
+    background: linear-gradient(135deg, #ff80d5, #958dff); /* Pink-purple gradient */
+    transform: translateY(-1px); /* Slight upward movement */
+}
+
+/* Container for category buttons (likely filters or quick actions) */
+.category-buttons {
+    display: grid;                   /* Grid layout */
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 1.5rem;                    /* Spacing between buttons */
+    margin-top: 2rem;               /* Space above */
+}
+
+/* Individual category buttons */
+.category-btn {
+    padding: 1.2rem;                /* Padding inside buttons */
+    border: none;                  /* No default border */
+    border-radius: 1rem;           /* Rounded corners */
+    background: linear-gradient(135deg, #c6f0ff, #fce3ff, #e0f7fa); /* Soft pastel gradient */
+    color: #111827;                /* Dark text */
+    cursor: pointer;               /* Pointer cursor on hover */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth animation */
+    display: flex;                /* Flexbox layout */
+    flex-direction: column;       /* Stack icon and text vertically */
+    align-items: center;          /* Center horizontally */
+    gap: 0.75rem;                 /* Space between icon and text */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border */
+}
+
+/* Hover effect for category buttons */
+.category-btn:hover {
+    background: linear-gradient(135deg, #ffc2e0, #c7c2ff); /* Pink-purple pastel gradient */
+    transform: translateY(-3px);  /* Move button upwards */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Dark shadow for depth */
+}
+
+/* Icon inside category buttons */
+.category-btn i {
+    font-size: 1.75rem;            /* Large icon size */
+    color: var(--accent-blue);     /* Accent blue color */
+}
+
+       .welcome-message {
+    align-self: center !important;     /* Center the welcome message horizontally in flex container */
+    text-align: center;                 /* Center-align the text inside */
+    max-width: 800px;                  /* Limit the width to 800px */
+    width: 100%;                      /* Take full width of parent container */
+    margin: 2rem auto;                /* Vertical margin 2rem, horizontally auto (centers block) */
+    padding: 2.5rem;                  /* Internal padding around the message */
+    background: #ffffff);
+}
+
+.welcome-message h2 {
+    font-size: 2.5rem;                /* Large heading font size */
+    margin-bottom: 1.5rem;            /* Space below heading */
+    letter-spacing: -0.05em;          /* Slightly tighten spacing between letters */
+}
+
+.welcome-message p {
+    color: var(--text-secondary);     /* Use secondary text color for paragraph */
+    font-size: 1.1rem;                 /* Slightly larger than normal text */
+    margin-bottom: 2.5rem;             /* Space below paragraph */
+}
+
+/* Gradient text effect for special text */
+.gradient-text {
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple)); /* Gradient background */
+    -webkit-background-clip: text;          /* Clip background to the text (for WebKit browsers) */
+    -webkit-text-fill-color: transparent;  /* Make the text itself transparent so the gradient shows */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }  /* Start transparent and shifted down */
+    to { opacity: 1; transform: translateY(0); }       /* End fully opaque and original position */
+}
+
+/* Custom scrollbar styling for chatbox */
+
+#chatbox::-webkit-scrollbar {
+    width: 8px;          /* Width of the vertical scrollbar */
+}
+
+#chatbox::-webkit-scrollbar-track {
+    background: var(--primary-bg); /* Track (background) of the scrollbar */
+}
+
+/* Thumb (draggable part) of the scrollbar */
+#chatbox::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: 4px;  /* Rounded corners on the thumb */
+}
+
+@media (max-width: 600px) {
+    /* Make nav container stack vertically instead of horizontal */
+    nav .container {
+        flex-direction: column;
+        align-items: flex-start; /* Align nav items to the left */
+    }
+
+    /* Stack the navigation links vertically */
+    nav ul {
+        flex-direction: column;
+        width: 100%;       /* Take full width */
+        gap: 0.5rem;       /* Smaller spacing between links */
+        padding-top: 1rem; /* Add some space above the links */
+    }
+
+    /* Navigation links adjust font size and full width for easier tapping */
+    nav ul li a {
+        font-size: 0.85rem; /* Smaller text */
+        padding: 0.5rem 0;  /* Vertical padding */
+        display: block;     /* Make the entire area clickable */
+        width: 100%;        /* Fill available width */
+    }
+
+    /* Logo margin adjusts for vertical stacking */
+    nav .logo {
+        margin-bottom: auto; /* Push logo to top */
+    }
+
+    /* The main card/container wrapper takes full width */
+    .wrapper {
+        width: 100%;
+        box-sizing: border-box; /* Include padding/borders in width */
+    }
+
+    /* Chat messages take full width */
+    .message {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Add extra top margin for chat container (because nav is fixed) and reduce side padding */
+    #chat-container {
+        margin-top: 120px;
+        padding: 0 1rem;
+    }
+
+    /* Make input and send button full width for easier tapping */
+    #user-input, #send-btn {
+        width: 100%;
+    }
+
+    /* Slightly reduce padding inside input wrapper for mobile */
+    .input-wrapper {
+        padding: 0.75rem 1rem;
+    }
+
+    /* Category buttons get smaller font size and centered text */
+    .category-btn {
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    /* Welcome message heading font size reduced */
+    .welcome-message h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Welcome message paragraph font size reduced */
+    .welcome-message p {
+        font-size: 0.9rem;
+    }
+
+    /* Category button icons become smaller */
+    .category-btn i {
+        font-size: 1.2rem;
+    }
+}
+
+  /* Center the content inside the send button */
+#send-btn {
+    justify-content: center;
+}
+
+/* Styles for the welcome message container */
+.welcome-message {
+    align-self: center !important;          /* Override other alignments to center this block in flex container */
+    text-align: center;                     /* Center the text inside the welcome message */
+    max-width: 800px;                       /* Limit max width to 800px for better readability */
+    width: 100%;                            /* Allow the container to be responsive */
+    margin: 2rem auto;                      /* Add vertical spacing and center horizontally */
+    padding: 1.5rem;                        /* Add internal spacing inside the box */
+    background: var(--card-bg);             /* Use card background color from CSS variables */
+    border-radius: 1rem;                    /* Rounded corners for smooth look */
+    box-sizing: border-box;                 /* Include padding and border within total width and height */
+}
+    </style>
+</head>
+<body>
+  <!-- Navigation bar at the top of the page -->
+<nav>
+    <div class="container">
+        <!-- Logo section -->
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AUSDIAS Logo">
+        </div>
+
+        <!-- Navigation menu items -->
+        <ul>
+            <!-- Active page link -->
+            <li><a href="{{ url_for('chatbot') }}" class="active">
+                <i class="fas fa-robot"></i> Assistant
+            </a></li>
+
+            <!-- Other navigation links -->
+            <li><a href="{{ url_for('dashboard') }}">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a></li>
+            <li><a href="{{ url_for('aboutus') }}">
+                <i class="fas fa-info-circle"></i> About
+            </a></li>
+            <li><a href="{{ url_for('services') }}">
+                <i class="fas fa-shield-alt"></i> Services
+            </a></li>
+            <li><a href="{{ url_for('contactus') }}">
+                <i class="fas fa-envelope"></i> Contact
+            </a></li>
+            <li><a href="{{ url_for('login') }}">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main chat container -->
+<div id="chat-container">
+    <!-- Chatbox holds messages -->
+    <div id="chatbox">
+        <!-- Welcome message from bot with styled message box -->
+        <div class="message bot-message welcome-message">
+            <!-- Heading with gradient text -->
+            <h2 class="gradient-text">Welcome to Phishing Detection</h2>
+
+            <!-- Intro text -->
+            <p>Secure your digital presence with advanced threat analysis</p>
+            <p>Ready to catch some phishing? Choose a detection method to get started!</p>
+
+            <!-- Buttons for selecting phishing detection methods -->
+            <div class="category-buttons">
+                <!-- Button to navigate to URL Analysis page -->
+                <button class="category-btn" onclick="window.location.href='/chatbot/url'">
+                    <i class="fas fa-link"></i> <!-- Link icon -->
+                    URL Analysis
+                    <small>Scan suspicious links</small>
+                </button>
+
+                <!-- Button to navigate to Email Scan page -->
+                <button class="category-btn" onclick="window.location.href='/chatbot/email'">
+                    <i class="fas fa-envelope-open-text"></i> <!-- Email icon -->
+                    Email Scan
+                    <small>Verify email content</small>
+                </button>
+
+                <!-- Button to navigate to Image Check page -->
+                <button class="category-btn" onclick="window.location.href='/chatbot/image'">
+                    <i class="fas fa-qrcode"></i> <!-- QR code icon -->
+                    Image Check
+                    <small>Analyze phishing images</small>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
